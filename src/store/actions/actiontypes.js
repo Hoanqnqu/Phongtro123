@@ -3,5 +3,9 @@ const actionTypes = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
     REGISTER_FAIL: 'REGISTER_FAIL',
     LOGOUT: 'lOGOUT',
+    LOGIN_SUCCESS: 'REGISTER_SUCCESS',
+    LOGIN_FAIL: 'REGISTER_FAIL',
+
+    GET_POSTS: 'GET_POSTS',
 };
 export default actionTypes;
