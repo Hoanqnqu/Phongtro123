@@ -8,4 +8,4 @@ export { default as RentalHouse } from '~/contains/Public/RentalHouse';
 export { default as RentalRoom } from '~/contains/Public/RentalRoom';
 export { default as RentalSpace } from '~/contains/Public/RentalSpace';
 export { default as Search } from '~/contains/Public/Search';
-
+export { default as DetailPost } from '~/contains/Public/DetailPost';

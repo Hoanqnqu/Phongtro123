@@ -5,3 +5,6 @@ export { default as Province } from '~/components/Province';
 export { default as ProvinceBtn } from '~/components/ProvinceBtn';
 export { default as List } from '~/components/List';
 export { default as Item } from '~/components/Item';
+export { default as PageNumber } from '~/components/PageNumber';
+export { default as Pagination } from '~/components/Pagination';
+export { default as ItemSidebar } from '~/components/ItemSidebar';

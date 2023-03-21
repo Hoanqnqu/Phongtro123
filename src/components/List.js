@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Button from './Button';
 import Item from './Item';
-import { getPosts } from '~/store/actions/post';
+import { getLimitPosts } from '~/store/actions/post';
 import { useDispatch, useSelector } from 'react-redux';
 
-function List() {
+function List({ page }) {
     const dispath = useDispatch();
     const { posts } = useSelector((state) => state.post);
-    useEffect(() => {
-        dispath(getPosts());
-    }, []);
 
-    console.log(posts);
+    useEffect(() => {
+        let offset = page ? +page - 1 : 0;
+        dispath(getLimitPosts(offset));
+    }, [page]);
+
+
+    //console.log(posts);
     return (
         <div className="w-full  bg-white  shadow-md rounded-md py-2">
             <div className="flex items-center justify-between my-3 px-4">
@@ -36,6 +39,7 @@ function List() {
                                 star={+item?.star}
                                 title={item?.title}
                                 user={item?.user}
+                                id={item?.id}
                             />
                         );
                     })}

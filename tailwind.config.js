@@ -20,6 +20,7 @@ module.exports = {
             cursor: {
                 pointer: 'pointer',
             },
+            
         },
     },
     plugins: [],
