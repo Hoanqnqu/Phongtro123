@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { List, Province, Pagination, ItemSidebar } from '~/components';
+import { List, Province, Pagination, ItemSidebar, RelatedPost } from '~/components';
 import { text } from '~/ultils/containt';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +28,7 @@ function Homepage() {
                     <ItemSidebar content={categories} title={'Danh sách cho thuê'} />
                     <ItemSidebar isDouble={true} type="priceCode" content={prices} title={'Xem theo giá'} />
                     <ItemSidebar isDouble={true} type="areaCode" content={areas} title={'Xem diện tích'} />
+                    <RelatedPost />
                 </div>
             </div>
         </div>

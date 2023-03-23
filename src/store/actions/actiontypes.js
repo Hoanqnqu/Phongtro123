@@ -8,9 +8,9 @@ const actionTypes = {
 
     GET_POSTS: 'GET_POSTS',
     GET_LIMIT_POSTS: 'GET_LIMIT_POSTS',
+    GET_NEW_POSTS: 'GET_NEW_POSTS',
     GET_CATEGORY: 'GET_CATEGORY',
     GET_PRICES: 'GET_PRICES',
     GET_AREAS: 'GET_AREAS',
-
 };
 export default actionTypes;

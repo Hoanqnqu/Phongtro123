@@ -10,7 +10,7 @@ const star = [1, 2, 3, 4, 5];
 const Intro = () => {
     const { categories } = useSelector((state) => state.app);
     return (
-        <div className="w-3/5 bg-white rounded-md p-4 shadow-md flex flex-col gap-4 justify-center items-center  ">
+        <div className="w-full bg-white rounded-md p-4 shadow-md flex flex-col gap-4 justify-center items-center  ">
             <h3 className="font-bold text-lg">{text.title}</h3>
             <p className="text-gray-800 text-center my-4">
                 {text.description}

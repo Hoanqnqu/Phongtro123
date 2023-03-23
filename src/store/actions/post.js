@@ -1,4 +1,4 @@
-import { apiGetPosts, apiGetLimitPosts } from '~/services/post';
+import { apiGetPosts, apiGetLimitPosts, apiGetNewPosts } from '~/services/post';
 import actiontypes from './actiontypes';
 
 export const getPosts = (payload) => async (dispath) => {
@@ -44,6 +44,29 @@ export const getLimitPosts = (query) => async (dispath) => {
         dispath({
             type: actiontypes.GET_LIMIT_POSTS,
             posts: null,
+        });
+    }
+};
+
+export const getNewPosts = (query) => async (dispath) => {
+    try {
+        const response = await apiGetNewPosts(query);
+
+        if (response?.data.err === 0) {
+            dispath({
+                type: actiontypes.GET_NEW_POSTS,
+                newPosts: response.data.response,
+            });
+        } else {
+            dispath({
+                type: actiontypes.GET_NEW_POSTS,
+                msg: response.data.msg,
+            });
+        }
+    } catch (error) {
+        dispath({
+            type: actiontypes.GET_NEW_POSTS,
+            newPosts: null,
         });
     }
 };
