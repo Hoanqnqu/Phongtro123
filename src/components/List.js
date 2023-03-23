@@ -3,16 +3,26 @@ import Button from './Button';
 import Item from './Item';
 import { getLimitPosts } from '~/store/actions/post';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 function List({ page }) {
     const dispath = useDispatch();
+    const [searchParams] = useSearchParams();
     const { posts } = useSelector((state) => state.post);
 
     useEffect(() => {
-        let offset = page ? +page - 1 : 0;
-        dispath(getLimitPosts(offset));
-    }, [page]);
-
+        let params = [];
+        for (let entry of searchParams.entries()) {
+            params.push(entry);
+        }
+        let searchParamsObject = {};
+        params?.map((i) => {
+            searchParamsObject = { ...searchParamsObject, [i[0]]: i[1] };
+        });
+        // let page = searchParams.get('page') || 0;
+        // let offset = page ? +page - 1 : 0;
+        dispath(getLimitPosts(searchParamsObject));
+    }, [searchParams]);
 
     //console.log(posts);
     return (

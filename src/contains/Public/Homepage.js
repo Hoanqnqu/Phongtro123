@@ -11,8 +11,7 @@ function Homepage() {
     useEffect(() => {
         dispath(actions.getPrices());
         dispath(actions.getAreas());
-        console.log(areas);
-    }, []);
+    }, [params]);
     return (
         <div className="w-full flex flex-col gap-3">
             <div>
@@ -22,13 +21,13 @@ function Homepage() {
             <Province />
             <div className="w-full flex gap-4">
                 <div className="w-[70%]">
-                    <List page={params.get('page')} />
+                    <List />
                     <Pagination page={params.get('page') || 1} />
                 </div>
                 <div className="w-[30%] border border-green-500 flex flex-col gap-4 justify-start items-center">
                     <ItemSidebar content={categories} title={'Danh sách cho thuê'} />
-                    <ItemSidebar isDouble={true} content={prices} title={'Xem theo giá'} />
-                    <ItemSidebar isDouble={true} content={areas} title={'Xem diện tích'} />
+                    <ItemSidebar isDouble={true} type="priceCode" content={prices} title={'Xem theo giá'} />
+                    <ItemSidebar isDouble={true} type="areaCode" content={areas} title={'Xem diện tích'} />
                 </div>
             </div>
         </div>

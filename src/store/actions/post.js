@@ -24,10 +24,10 @@ export const getPosts = (payload) => async (dispath) => {
     }
 };
 
-export const getLimitPosts = (page) => async (dispath) => {
+export const getLimitPosts = (query) => async (dispath) => {
     try {
-        const response = await apiGetLimitPosts(page);
-        //console.log(response);
+        const response = await apiGetLimitPosts(query);
+
         if (response?.data.err === 0) {
             dispath({
                 type: actiontypes.GET_LIMIT_POSTS,
