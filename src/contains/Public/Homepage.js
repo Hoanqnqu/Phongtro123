@@ -24,7 +24,7 @@ function Homepage() {
                     <List />
                     <Pagination page={params.get('page') || 1} />
                 </div>
-                <div className="w-[30%] border border-green-500 flex flex-col gap-4 justify-start items-center">
+                <div className="w-[30%]  flex flex-col gap-4 justify-start items-center">
                     <ItemSidebar content={categories} title={'Danh sách cho thuê'} />
                     <ItemSidebar isDouble={true} type="priceCode" content={prices} title={'Xem theo giá'} />
                     <ItemSidebar isDouble={true} type="areaCode" content={areas} title={'Xem diện tích'} />

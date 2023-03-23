@@ -8,3 +8,5 @@ export { default as Item } from '~/components/Item';
 export { default as PageNumber } from '~/components/PageNumber';
 export { default as Pagination } from '~/components/Pagination';
 export { default as ItemSidebar } from '~/components/ItemSidebar';
+export { default as Intro } from '~/components/Intro';
+export { default as Contact } from '~/components/Contact';
