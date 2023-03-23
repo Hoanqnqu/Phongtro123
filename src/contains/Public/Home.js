@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 
 function Home() {
     return (
-        <div className="w-full flex gap-4 flex-col items-center h-full">
+        <div className="w-full flex gap-6 flex-col items-center h-full">
             <Header />
             <Navigation />
             <Search />

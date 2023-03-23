@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { text } from '~/ultils/dataIntro';
 import icons from '~/assets/icons';
 import Button from './Button';
-
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { formatVietnameseToString } from '~/ultils/common';
 const { GrStar } = icons;
 const star = [1, 2, 3, 4, 5];
 const Intro = () => {
+    const { categories } = useSelector((state) => state.app);
     return (
         <div className="w-3/5 bg-white rounded-md p-4 shadow-md flex flex-col gap-4 justify-center items-center  ">
             <h3 className="font-bold text-lg">{text.title}</h3>
-            <p className="text-gray-800 text-center my-4">{text.description}</p>
+            <p className="text-gray-800 text-center my-4">
+                {text.description}
+                <span className="text-link">
+                    {categories?.length > 0 &&
+                        categories.map((item) => {
+                            return (
+                                <Link
+                                    to={`/${formatVietnameseToString(item.value)}`}
+                                    key={item.code}
+                                    className="text-blue-600 font-medium hover:text-orange-600 "
+                                >
+                                    {`${item.value.toLowerCase()}, `}
+                                </Link>
+                            );
+                        })}
+                </span>
+                {text.description2}
+            </p>
             <div className="flex items-center justify-around w-full">
                 {text.statistic.map((item, index) => {
                     return (
@@ -35,10 +55,10 @@ const Intro = () => {
             <span className="text-gray-700">{text.author}</span>
             <h3 className="font-bold text-lg py-2">{text.question}</h3>
             <p>{text.answer}</p>
-            <Button text={'Đăng tin ngay'} bgColor="bg-secondary2" textColor="text-white" />
+            <Button text={'Đăng tin ngay'} bgColor="bg-secondary2" textColor="text-white" px={'px-6'} />
             <div className="h-12"> </div>
         </div>
     );
 };
 
-export default Intro;
+export default memo(Intro);

@@ -1,10 +1,12 @@
-import React ,{memo}from 'react';
+import React, { memo } from 'react';
 
-function Button({ text, textColor, bgColor, IcAfter, onClick }) {
+function Button({ text, textColor, bgColor, IcAfter, onClick, px }) {
     return (
         <button
             type="button"
-            className={`p-2 ${textColor} ${bgColor} outline-none rounded-md hover:underline flex items-center justify-center gap-1`}
+            className={`py-2 ${
+                px ? px : 'px-2'
+            } ${textColor} ${bgColor} outline-none rounded-md hover:underline flex items-center justify-center gap-1`}
             onClick={onClick}
         >
             <span>{text}</span>
