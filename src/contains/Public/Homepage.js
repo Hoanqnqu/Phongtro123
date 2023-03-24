@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 import { List, Province, Pagination, ItemSidebar, RelatedPost } from '~/components';
 import { text } from '~/ultils/containt';
-import { useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '~/store/actions';
+import {  useSelector } from 'react-redux';
+
 function Homepage() {
-    const [params] = useSearchParams();
     const { categories, prices, areas } = useSelector((state) => state.app);
-    const dispath = useDispatch();
-    useEffect(() => {
-        dispath(actions.getPrices());
-        dispath(actions.getAreas());
-    }, [params]);
+   
     return (
         <div className="w-full flex flex-col gap-3">
             <div>
@@ -22,7 +16,7 @@ function Homepage() {
             <div className="w-full flex gap-4">
                 <div className="w-[70%]">
                     <List />
-                    <Pagination page={params.get('page') || 1} />
+                    <Pagination  />
                 </div>
                 <div className="w-[30%]  flex flex-col gap-4 justify-start items-center">
                     <ItemSidebar content={categories} title={'Danh sách cho thuê'} />

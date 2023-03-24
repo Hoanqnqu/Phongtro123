@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment/moment';
+import 'moment/locale/vi'
 const ItemNews = ({ title, image, price, createdAt }) => {
     return (
         <div className="w-full flex items-center gap-1 py-2 border-b border-gray-300">

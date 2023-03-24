@@ -6,10 +6,10 @@ import { useSearchParams } from 'react-router-dom';
 
 const { GrLinkNext, GrLinkPrevious } = icons;
 //const arrNumber = [1, 2, 3];
-function Pagination({ page }) {
+function Pagination() {
     const { count, posts } = useSelector((state) => state.post);
     const [arrPage, setArrPage] = useState([]);
-    const [currentPage, setCurrentPage] = useState(+page || 1);
+    const [currentPage, setCurrentPage] = useState(1);
     const [isHideEnd, setIsHideEnd] = useState(false);
     const [isHideStart, setIsHideStart] = useState(false);
     const [searchParams] = useSearchParams();

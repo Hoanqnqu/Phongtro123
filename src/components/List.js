@@ -5,7 +5,7 @@ import { getLimitPosts } from '~/store/actions/post';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-function List({ page }) {
+function List({ categoryCode }) {
     const dispath = useDispatch();
     const [searchParams] = useSearchParams();
     const { posts } = useSelector((state) => state.post);
@@ -19,10 +19,12 @@ function List({ page }) {
         params?.map((i) => {
             searchParamsObject = { ...searchParamsObject, [i[0]]: i[1] };
         });
+        if (categoryCode) searchParamsObject.categoryCode = categoryCode;
         // let page = searchParams.get('page') || 0;
         // let offset = page ? +page - 1 : 0;
+        console.log(searchParamsObject);
         dispath(getLimitPosts(searchParamsObject));
-    }, [searchParams]);
+    }, [searchParams, categoryCode]);
 
     //console.log(posts);
     return (
