@@ -9,14 +9,12 @@ const Modal = ({ setIsShowModal, content, name }) => {
     useEffect(() => {
         const aciveTrackEl = document.getElementById('track-active');
         let minPercent = percent1 <= percent2 ? percent1 : percent2;
-        aciveTrackEl.style.left = `${minPercent}%`;
         let maxPercent = percent2 <= percent1 ? 100 - percent1 : 100 - percent2;
-        aciveTrackEl.style.right = `${maxPercent}%`;
+        if (aciveTrackEl) {
+            aciveTrackEl.style.left = `${minPercent}%`;
+            aciveTrackEl.style.right = `${maxPercent}%`;
+        }
     }, [percent1, percent2]);
-
-    useEffect(() => {
-        const aciveTrackEl = document.getElementById('track-active');
-    }, [percent2, percent1]);
 
     const handleClickStack = (e) => {
         const stackEl = document.getElementById('track');
@@ -27,6 +25,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
         } else {
             setPercent2(percent);
         }
+    };
+
+    const cover100to15 = (percent) => {
+        return (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10;
     };
     return (
         <div
@@ -65,8 +67,13 @@ const Modal = ({ setIsShowModal, content, name }) => {
                 )}
 
                 {(name === 'Chọn giá' || name === 'Chọn diện tích') && (
-                    <div className="p-12">
+                    <div className="p-12 py-20">
                         <div className="flex flex-col items-center justify-center relative">
+                            <div className="z-30 absolute top-[-48px] font-bold text-lg text-orange-600">
+                                {`Từ ${percent1 <= percent2 ? cover100to15(percent1) : cover100to15(percent2)} - ${
+                                    percent1 <= percent2 ? cover100to15(percent2) : cover100to15(percent1)
+                                } triệu`}
+                            </div>
                             <div
                                 id={'track'}
                                 onClick={handleClickStack}
@@ -81,7 +88,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
                             <input
                                 max="100"
                                 min="0"
-                                step="5"
+                                step="1"
                                 type="range"
                                 value={percent1}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
@@ -90,12 +97,16 @@ const Modal = ({ setIsShowModal, content, name }) => {
                             <input
                                 max="100"
                                 min="0"
-                                step="5"
+                                step="1"
                                 type="range"
                                 value={percent2}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
                                 onChange={(e) => setPercent2(+e.target.value)}
                             />
+                            <div className="absolute z-30 top-6 left-0 right-0  flex justify-between items-center">
+                                <span className="">0</span>
+                                <span className="mr-[-12px]">15 triệu +</span>
+                            </div>
                         </div>
                     </div>
                 )}
