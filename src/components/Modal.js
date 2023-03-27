@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import icons from '~/assets/icons';
 import Item from './Item';
 const { GrLinkPrevious } = icons;
 const Modal = ({ setIsShowModal, content, name }) => {
+    const [percent1, setpercent1] = useState(0);
+    const [percent2, setpercent2] = useState(100);
+
+    useEffect(() => {
+        const aciveTrackEl = document.getElementById('track-active');
+        let minPercent = percent1 <= percent2 ? percent1 : percent2;
+        aciveTrackEl.style.left = `${minPercent}%`;
+        let maxPercent = percent2 <= percent1 ? 100-percent1 : 100 - percent2;
+        aciveTrackEl.style.right = `${maxPercent}%`;
+    }, [percent1, percent2]);
+
+    useEffect(() => {
+        const aciveTrackEl = document.getElementById('track-active');
+    }, [percent2, percent1]);
     return (
         <div
             className="fixed top-0 left-0 right-0 bottom-0 bg-overlay-70 flex z-20 justify-center items-center "
@@ -18,7 +32,6 @@ const Modal = ({ setIsShowModal, content, name }) => {
                 <div className="h-[45px] px-4 flex items-center border-b border-gray-200">
                     <span
                         className="cursor-pointer"
-                        o
                         onClick={(e) => {
                             e.stopPropagation();
                             setIsShowModal(false);
@@ -27,16 +40,49 @@ const Modal = ({ setIsShowModal, content, name }) => {
                         <GrLinkPrevious size={24} />
                     </span>
                 </div>
-                <div className="flex flex-col p-4">
-                    {content?.map((item) => {
-                        return (
-                            <span key={item.code} className="py-2 flex gap-2 items-center border-b border-gray-200">
-                                <input type={'radio'} name={name} id={item.code} value={item.code} />
-                                <label htmlFor={item.code}>{item.value}</label>
-                            </span>
-                        );
-                    })}
-                </div>
+                {(name === 'Phòng trọ, nhà trọ' || name === 'Toàn quốc') && (
+                    <div className="flex flex-col p-4">
+                        {content?.map((item) => {
+                            return (
+                                <span key={item.code} className="py-2 flex gap-2 items-center border-b border-gray-200">
+                                    <input type={'radio'} name={name} id={item.code} value={item.code} />
+                                    <label htmlFor={item.code}>{item.value}</label>
+                                </span>
+                            );
+                        })}
+                    </div>
+                )}
+
+                {(name === 'Chọn giá' || name === 'Chọn diện tích') && (
+                    <div className="p-12">
+                        <div className="flex flex-col items-center justify-center relative">
+                            <div className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full "></div>
+                            <div
+                                id="track-active"
+                                className="slider-track-active h-[5px] absolute top-0 bottom-0 bg-orange-600 rounded-full "
+                            ></div>
+
+                            <input
+                                max="100"
+                                min="0"
+                                step="5"
+                                type="range"
+                                value={percent1}
+                                className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
+                                onChange={(e) => setpercent1(+e.target.value)}
+                            />
+                            <input
+                                max="100"
+                                min="0"
+                                step="5"
+                                type="range"
+                                value={percent2}
+                                className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
+                                onChange={(e) => setpercent2(+e.target.value)}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
