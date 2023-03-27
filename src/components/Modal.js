@@ -3,20 +3,31 @@ import icons from '~/assets/icons';
 import Item from './Item';
 const { GrLinkPrevious } = icons;
 const Modal = ({ setIsShowModal, content, name }) => {
-    const [percent1, setpercent1] = useState(0);
-    const [percent2, setpercent2] = useState(100);
+    const [percent1, setPercent1] = useState(0);
+    const [percent2, setPercent2] = useState(100);
 
     useEffect(() => {
         const aciveTrackEl = document.getElementById('track-active');
         let minPercent = percent1 <= percent2 ? percent1 : percent2;
         aciveTrackEl.style.left = `${minPercent}%`;
-        let maxPercent = percent2 <= percent1 ? 100-percent1 : 100 - percent2;
+        let maxPercent = percent2 <= percent1 ? 100 - percent1 : 100 - percent2;
         aciveTrackEl.style.right = `${maxPercent}%`;
     }, [percent1, percent2]);
 
     useEffect(() => {
         const aciveTrackEl = document.getElementById('track-active');
     }, [percent2, percent1]);
+
+    const handleClickStack = (e) => {
+        const stackEl = document.getElementById('track');
+        const stackRect = stackEl.getBoundingClientRect();
+        let percent = Math.round(((e.clientX - stackRect.left) * 100) / stackRect.width, 0);
+        if (Math.abs(percent - percent1) <= Math.abs(percent - percent2)) {
+            setPercent1(percent);
+        } else {
+            setPercent2(percent);
+        }
+    };
     return (
         <div
             className="fixed top-0 left-0 right-0 bottom-0 bg-overlay-70 flex z-20 justify-center items-center "
@@ -56,9 +67,14 @@ const Modal = ({ setIsShowModal, content, name }) => {
                 {(name === 'Chọn giá' || name === 'Chọn diện tích') && (
                     <div className="p-12">
                         <div className="flex flex-col items-center justify-center relative">
-                            <div className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full "></div>
+                            <div
+                                id={'track'}
+                                onClick={handleClickStack}
+                                className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full "
+                            ></div>
                             <div
                                 id="track-active"
+                                onClick={handleClickStack}
                                 className="slider-track-active h-[5px] absolute top-0 bottom-0 bg-orange-600 rounded-full "
                             ></div>
 
@@ -69,7 +85,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
                                 type="range"
                                 value={percent1}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                                onChange={(e) => setpercent1(+e.target.value)}
+                                onChange={(e) => setPercent1(+e.target.value)}
                             />
                             <input
                                 max="100"
@@ -78,7 +94,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
                                 type="range"
                                 value={percent2}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                                onChange={(e) => setpercent2(+e.target.value)}
+                                onChange={(e) => setPercent2(+e.target.value)}
                             />
                         </div>
                     </div>
