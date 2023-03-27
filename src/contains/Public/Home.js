@@ -12,6 +12,7 @@ function Home() {
     useEffect(() => {
         dispath(actions.getPrices());
         dispath(actions.getAreas());
+        dispath(actions.getProvince());
     }, [params]);
     return (
         <div className="w-full flex gap-2 flex-col items-center h-full">

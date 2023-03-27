@@ -9,6 +9,7 @@ export const getCategories = (payload) => async (dispath) => {
             dispath({
                 type: actiontypes.GET_CATEGORY,
                 categories: response.data.response,
+                msg: '',
             });
         } else {
             dispath({
@@ -34,6 +35,7 @@ export const getPrices = (payload) => async (dispath) => {
                 prices: response.data.response.sort((a, b) => {
                     return +a.order - +b.order;
                 }),
+                msg: '',
             });
         } else {
             dispath({
@@ -46,6 +48,7 @@ export const getPrices = (payload) => async (dispath) => {
         dispath({
             type: actiontypes.GET_PRICES,
             prices: null,
+            msg: error,
         });
     }
 };
@@ -59,6 +62,7 @@ export const getAreas = (payload) => async (dispath) => {
                 areas: response.data.response.sort((a, b) => {
                     return +a.order - +b.order;
                 }),
+                msg: '',
             });
         } else {
             dispath({
@@ -70,7 +74,33 @@ export const getAreas = (payload) => async (dispath) => {
     } catch (error) {
         dispath({
             type: actiontypes.GET_AREAS,
-            prices: null,
+            areas: null,
+            msg: error,
+        });
+    }
+};
+export const getProvince = (payload) => async (dispath) => {
+    try {
+        const response = await apis.apiGetProvinces(payload);
+
+        if (response?.data.err === 0) {
+            dispath({
+                type: actiontypes.GET_PROVINCES,
+                provinces: response.data.response,
+                msg: '',
+            });
+        } else {
+            dispath({
+                type: actiontypes.GET_PROVINCES,
+                msg: response.data.msg,
+                province: null,
+            });
+        }
+    } catch (error) {
+        dispath({
+            type: actiontypes.GET_PROVINCES,
+            provinces: null,
+            msg: error,
         });
     }
 };
