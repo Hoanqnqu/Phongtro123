@@ -1,3 +1,4 @@
+import { clearConfigCache } from 'prettier';
 import React, { useEffect, useState } from 'react';
 import icons from '~/assets/icons';
 import Item from './Item';
@@ -5,7 +6,7 @@ const { GrLinkPrevious } = icons;
 const Modal = ({ setIsShowModal, content, name }) => {
     const [percent1, setPercent1] = useState(0);
     const [percent2, setPercent2] = useState(100);
-
+    const [activeEl, setActiveEl] = useState();
     useEffect(() => {
         const aciveTrackEl = document.getElementById('track-active');
         let minPercent = percent1 <= percent2 ? percent1 : percent2;
@@ -16,10 +17,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
         }
     }, [percent1, percent2]);
 
-    const handleClickStack = (e) => {
+    const handleClickTrack = (e, value) => {
         const stackEl = document.getElementById('track');
         const stackRect = stackEl.getBoundingClientRect();
-        let percent = Math.round(((e.clientX - stackRect.left) * 100) / stackRect.width, 0);
+        let percent = value ? value : Math.round(((e.clientX - stackRect.left) * 100) / stackRect.width, 0);
         if (Math.abs(percent - percent1) <= Math.abs(percent - percent2)) {
             setPercent1(percent);
         } else {
@@ -27,8 +28,39 @@ const Modal = ({ setIsShowModal, content, name }) => {
         }
     };
 
-    const cover100to15 = (percent) => {
+    const convert100to15 = (percent) => {
         return (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10;
+    };
+    const convert15to100 = (percent) => {
+        return Math.floor((percent / 15) * 100);
+    };
+    const getNumbers = (strng) =>
+        strng
+            .split(' ')
+            .map((item) => +item)
+            .filter((item) => !item === false);
+
+    const handlePrice = (code, value) => {
+        setActiveEl(code);
+        let arrMaxMin = getNumbers(value);
+        if (arrMaxMin.length === 1) {
+            if (arrMaxMin[0] === 1) {
+                setPercent1(0);
+                setPercent2(convert15to100(1));
+            }
+            if (arrMaxMin[0] === 15) {
+                setPercent1(100);
+                setPercent2(100);
+            }
+        }
+        if (arrMaxMin.length === 2) {
+            setPercent1(convert15to100(arrMaxMin[0]));
+            setPercent2(convert15to100(arrMaxMin[1]));
+        }
+    };
+    const handleSubmit = () => {
+        console.log('start', convert100to15(percent1));
+        console.log('end', convert100to15(percent2));
     };
     return (
         <div
@@ -36,7 +68,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
             onClick={() => setIsShowModal(false)}
         >
             <div
-                className="w-1/3 bg-white rounded-md"
+                className="w-2/5 bg-white rounded-md"
                 onClick={(e) => {
                     e.stopPropagation();
                     setIsShowModal(true);
@@ -70,18 +102,18 @@ const Modal = ({ setIsShowModal, content, name }) => {
                     <div className="p-12 py-20">
                         <div className="flex flex-col items-center justify-center relative">
                             <div className="z-30 absolute top-[-48px] font-bold text-lg text-orange-600">
-                                {`Từ ${percent1 <= percent2 ? cover100to15(percent1) : cover100to15(percent2)} - ${
-                                    percent1 <= percent2 ? cover100to15(percent2) : cover100to15(percent1)
+                                {`Từ ${percent1 <= percent2 ? convert100to15(percent1) : convert100to15(percent2)} - ${
+                                    percent1 <= percent2 ? convert100to15(percent2) : convert100to15(percent1)
                                 } triệu`}
                             </div>
                             <div
                                 id={'track'}
-                                onClick={handleClickStack}
+                                onClick={handleClickTrack}
                                 className="slider-track h-[5px] absolute top-0 bottom-0 w-full bg-gray-300 rounded-full "
                             ></div>
                             <div
                                 id="track-active"
-                                onClick={handleClickStack}
+                                onClick={handleClickTrack}
                                 className="slider-track-active h-[5px] absolute top-0 bottom-0 bg-orange-600 rounded-full "
                             ></div>
 
@@ -92,7 +124,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
                                 type="range"
                                 value={percent1}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                                onChange={(e) => setPercent1(+e.target.value)}
+                                onChange={(e) => {
+                                    setPercent1(+e.target.value);
+                                    activeEl && setActiveEl('');
+                                }}
                             />
                             <input
                                 max="100"
@@ -101,15 +136,60 @@ const Modal = ({ setIsShowModal, content, name }) => {
                                 type="range"
                                 value={percent2}
                                 className="w-full appearance-none pointer-events-none absolute top-0 bottom-0"
-                                onChange={(e) => setPercent2(+e.target.value)}
+                                onChange={(e) => {
+                                    setPercent2(+e.target.value);
+                                    activeEl && setActiveEl('');
+                                }}
                             />
                             <div className="absolute z-30 top-6 left-0 right-0  flex justify-between items-center">
-                                <span className="">0</span>
-                                <span className="mr-[-12px]">15 triệu +</span>
+                                <span
+                                    className="cursor-pointer"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickTrack(e, 0);
+                                    }}
+                                >
+                                    0
+                                </span>
+                                <span
+                                    className="mr-[-12px] cursor-pointer"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickTrack(e, 100);
+                                    }}
+                                >
+                                    15 triệu +
+                                </span>
+                            </div>
+                        </div>
+                        <div className="mt-24 ">
+                            <h4 className="font-medium mb-4">Chọn nhanh</h4>
+                            <div className="flex gap-1 items-center flex-wrap w-full">
+                                {content?.map((item) => {
+                                    return (
+                                        <button
+                                            key={item.code}
+                                            onClick={() => handlePrice(item.code, item.value)}
+                                            className={`px-4 py-2 bg-gray-200 rounded-md ${
+                                                item.code === activeEl ? 'bg-blue-500 text-white ' : ' '
+                                            }cursor-pointer `}
+                                        >
+                                            {item.value}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
                 )}
+
+                <button
+                    type="button"
+                    className="w-full bg-orange-400 py-2 font-medium rounded-bl-md rounded-br-md"
+                    onClick={handleSubmit}
+                >
+                    Áp dụng
+                </button>
             </div>
         </div>
     );
