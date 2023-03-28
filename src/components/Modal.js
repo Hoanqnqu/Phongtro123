@@ -35,7 +35,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
             ? Math.ceil(Math.round(percent * 0.9) / 5) * 5
             : 0;
     };
-    const convert15to100 = (percent) => {
+    const convertTo100 = (percent) => {
         let target = name === 'Chọn giá' ? 15 : name === 'Chọn diện tích' ? 90 : 1;
         return Math.floor((percent / target) * 100);
     };
@@ -57,11 +57,11 @@ const Modal = ({ setIsShowModal, content, name }) => {
         if (arrMaxMin.length === 1) {
             if (arrMaxMin[0] === 1) {
                 setPercent1(0);
-                setPercent2(convert15to100(1));
+                setPercent2(convertTo100(1));
             }
             if (arrMaxMin[0] === 20) {
                 setPercent1(0);
-                setPercent2(convert15to100(20));
+                setPercent2(convertTo100(20));
             }
             if (arrMaxMin[0] === 15 || arrMaxMin[0] === 90) {
                 setPercent1(100);
@@ -69,8 +69,8 @@ const Modal = ({ setIsShowModal, content, name }) => {
             }
         }
         if (arrMaxMin.length === 2) {
-            setPercent1(convert15to100(arrMaxMin[0]));
-            setPercent2(convert15to100(arrMaxMin[1]));
+            setPercent1(convertTo100(arrMaxMin[0]));
+            setPercent2(convertTo100(arrMaxMin[1]));
         }
     };
     const handleSubmit = () => {
@@ -117,11 +117,17 @@ const Modal = ({ setIsShowModal, content, name }) => {
                     <div className="p-12 py-20">
                         <div className="flex flex-col items-center justify-center relative">
                             <div className="z-30 absolute top-[-48px] font-bold text-lg text-orange-600">
-                                {`Từ ${
-                                    percent1 <= percent2 ? convert100toTarget(percent1) : convert100toTarget(percent2)
-                                } - ${
-                                    percent1 <= percent2 ? convert100toTarget(percent2) : convert100toTarget(percent1)
-                                } ${name === 'Chọn giá' ? 'Chọn giá' : name === 'Chọn diện tích' ? 'm2' : ''}`}
+                                {percent1 === 100 && percent2 === 100
+                                    ? `Trên ${convert100toTarget(percent1)} ${name === 'Chọn giá' ? 'triệu' : 'm2'} +`
+                                    : `Từ ${
+                                          percent1 <= percent2
+                                              ? convert100toTarget(percent1)
+                                              : convert100toTarget(percent2)
+                                      } - ${
+                                          percent1 <= percent2
+                                              ? convert100toTarget(percent2)
+                                              : convert100toTarget(percent1)
+                                      } ${name === 'Chọn giá' ? 'triệu' : name === 'Chọn diện tích' ? 'm2' : ''}`}
                             </div>
                             <div
                                 id={'track'}
