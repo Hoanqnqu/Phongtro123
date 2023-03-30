@@ -2,7 +2,10 @@ import { clearConfigCache } from 'prettier';
 import React, { useEffect, useState } from 'react';
 import icons from '~/assets/icons';
 import Item from './Item';
+import { getNumbersPrice, getNumbersArea } from '~/ultils/common/getNumber';
+
 const { GrLinkPrevious } = icons;
+
 const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
     const [percent1, setPercent1] = useState(0);
     const [percent2, setPercent2] = useState(100);
@@ -40,20 +43,9 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
         return Math.floor((percent / target) * 100);
     };
 
-    const getNumbers = (strng) =>
-        strng
-            .split(' ')
-            .map((item) => +item)
-            .filter((item) => !item === false);
-    const getNumbersArea = (strng) => {
-        return strng
-            .split(' ')
-            .map((item) => +item.match(/\d+/))
-            .filter((item) => item !== 0);
-    };
     const handleActive = (code, value) => {
         setActiveEl(code);
-        let arrMaxMin = name === 'Chọn giá' ? getNumbers(value) : getNumbersArea(value);
+        let arrMaxMin = name === 'Chọn giá' ? getNumbersPrice(value) : getNumbersArea(value);
         if (arrMaxMin.length === 1) {
             if (arrMaxMin[0] === 1) {
                 setPercent1(0);
