@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { path } from '~/ultils/containt';
-import { DetailPost, Home, Homepage, Login, Rental } from './contains/Public';
+import { DetailPost, Home, Homepage, Login, Rental, SearchDetail } from './contains/Public';
 function App() {
     return (
         <div className="w-creen bg-primary">
@@ -12,6 +12,8 @@ function App() {
                     <Route path={path.CHO_THUE_MAT_BANG} element={<Rental categoryCode={'CTMB'} />} />
                     <Route path={path.CHO_THUE_PHONG_TRO} element={<Rental categoryCode={'CTPT'} />} />
                     <Route path={path.NHA_CHO_THUE} element={<Rental categoryCode={'NCT'} />} />
+                    <Route path={path.SEARCH} element={<SearchDetail />} />
+
                     <Route path={path.DETAIL_POST_TITLE_POSTID} element={<DetailPost />} />
                 </Route>
             </Routes>

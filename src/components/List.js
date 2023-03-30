@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Button from './Button';
 import Item from './Item';
 import { getLimitPosts } from '~/store/actions/post';
@@ -16,8 +16,13 @@ function List({ categoryCode }) {
             params.push(entry);
         }
         let searchParamsObject = {};
-        params?.map((i) => {
-            searchParamsObject = { ...searchParamsObject, [i[0]]: i[1] };
+        console.log(params);
+        params?.forEach((i) => {
+            if (Object.keys(searchParamsObject)?.some((item) => item === i[0])) {
+                searchParamsObject[i[0]] = [...searchParamsObject[i[0]], i[1]];
+            } else {
+                searchParamsObject = { ...searchParamsObject, [i[0]]: [i[1]] };
+            }
         });
         if (categoryCode) searchParamsObject.categoryCode = categoryCode;
         // let page = searchParams.get('page') || 0;

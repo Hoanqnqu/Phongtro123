@@ -82,13 +82,16 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
     //     console.log('end', convert100toTarget(percent2));
     // };
     const handleBeforeSubmit = (e) => {
+        let min = percent1 <= percent2 ? percent1 : percent2;
+        let max = percent1 <= percent2 ? percent2 : percent1;
+        let arrMinMax = [convert100toTarget(min), convert100toTarget(max)];
+
         const gaps =
             name === 'Chọn giá'
-                ? getCodesPrice([convert100toTarget(percent1), convert100toTarget(percent2)], content)
+                ? getCodesPrice(arrMinMax, content)
                 : name === 'Chọn diện tích'
-                ? getCodesArea([convert100toTarget(percent1), convert100toTarget(percent2)], content)
+                ? getCodesArea(arrMinMax, content)
                 : [];
-        console.log(getCodesPrice([convert100toTarget(percent1), convert100toTarget(percent2)], content), name === 'Chọn giá');
         handleSubmit(
             e,
             {
@@ -98,7 +101,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                     name === 'Chọn giá' ? 'triệu' : 'm2'
                 }`,
             },
-            { [(name === 'Chọn giá' ? 'price' : 'area') + 'Arr']: [percent1, percent2] },
+            { [(name === 'Chọn giá' ? 'price' : 'area') + 'Arr']: arrMinMax },
         );
     };
     return (
@@ -139,7 +142,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                                 }
                                 onChange={(e) =>
                                     handleSubmit(e, {
-                                        [name]: defaultText,
+                                        [name === 'Phòng trọ, nhà trọ' ? 'category' : 'province']: defaultText,
                                         [(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']: null,
                                     })
                                 }

@@ -2,14 +2,14 @@ import React, { memo } from 'react';
 import icons from '~/assets/icons';
 import { formatVietnameseToString } from '~/ultils/common';
 import { Link } from 'react-router-dom';
-import * as actions from '../store/actions';
-import { useDispatch } from 'react-redux';
+
+
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
 const { GrNext } = icons;
 
 const ItemSidebar = ({ content, title, isDouble, type }) => {
-    const dispatch = useDispatch();
+    
     const location = useLocation();
     const navigate = useNavigate();
     const formatContent = () => {
