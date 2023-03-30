@@ -16,7 +16,7 @@ function List({ categoryCode }) {
             params.push(entry);
         }
         let searchParamsObject = {};
-        console.log(params);
+       
         params?.forEach((i) => {
             if (Object.keys(searchParamsObject)?.some((item) => item === i[0])) {
                 searchParamsObject[i[0]] = [...searchParamsObject[i[0]], i[1]];

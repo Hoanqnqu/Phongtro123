@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import icons from '~/assets/icons';
 
 import { getNumbersPrice, getNumbersArea } from '~/ultils/common/getNumber';
@@ -285,4 +285,4 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
     );
 };
 
-export default Modal;
+export default memo(Modal);

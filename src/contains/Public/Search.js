@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import icons from '~/assets/icons';
 import { SearchItem } from '~/components';
 import Modal from '~/components/Modal';
@@ -9,6 +9,7 @@ const { BsChevronRight, HiOutlineLocationMarker, TbReportMoney, RiCrop2Line, MdO
 
 function Search() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [isShowModel, setIsShowModal] = useState(false);
     const [content, setContent] = useState([]);
     const [name, setName] = useState('');
@@ -16,6 +17,13 @@ function Search() {
     const [queries, setQueries] = useState({});
     const [arrMinMax, setArrMinMax] = useState({});
     const [defaultText, setDefaultText] = useState('');
+
+    useEffect(() => {
+        if (!location.pathname.includes(path.SEARCH)) {
+            setArrMinMax({});
+            setQueries({});
+        }
+    }, [location]);
 
     const handleShowModal = (content, name, defaultText) => {
         setContent(content);
@@ -41,12 +49,26 @@ function Search() {
         queryCodes.forEach((item) => {
             queryCodesObj[item[0]] = item[1];
         });
-        navigate({
-            pathname: path.SEARCH,
-            search: createSearchParams(queryCodesObj).toString(),
+        const queryText = Object.entries(queries).filter((item) => !item[0].includes('Code'));
+        console.log(queryText);
+        let queryTextObj = {};
+        queryText.forEach((item) => {
+            queryTextObj[item[0]] = item[1];
         });
+        console.log(queryTextObj);
+        let titleSearch = `${queryTextObj.category ? queryTextObj.category : 'Cho thuê tất cả'} ${
+            queryTextObj.province ? `tỉnh ${queryTextObj.province}` : ''
+        } ${queryTextObj.price ? `giá ${queryTextObj.price}` : ''} ${
+            queryTextObj.area ? `diện tích ${queryTextObj.area}` : ''
+        } `;
+        navigate(
+            {
+                pathname: path.SEARCH,
+                search: createSearchParams(queryCodesObj).toString(),
+            },
+            { state: { titleSearch } },
+        );
     };
-
     return (
         <>
             <div className="p-[10px] w-3/5 my-3 bg-[#febb02] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
