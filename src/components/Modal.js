@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import icons from '~/assets/icons';
 import Item from './Item';
 const { GrLinkPrevious } = icons;
-const Modal = ({ setIsShowModal, content, name }) => {
+const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
     const [percent1, setPercent1] = useState(0);
     const [percent2, setPercent2] = useState(100);
     const [activeEl, setActiveEl] = useState();
@@ -73,10 +73,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
             setPercent2(convertTo100(arrMaxMin[1]));
         }
     };
-    const handleSubmit = () => {
-        console.log('start', convert100toTarget(percent1));
-        console.log('end', convert100toTarget(percent2));
-    };
+    // const handleSubmit = () => {
+    //     console.log('start', convert100toTarget(percent1));
+    //     console.log('end', convert100toTarget(percent2));
+    // };
     return (
         <div
             className="fixed top-0 left-0 right-0 bottom-0 bg-overlay-70 flex z-20 justify-center items-center "
@@ -105,7 +105,25 @@ const Modal = ({ setIsShowModal, content, name }) => {
                         {content?.map((item) => {
                             return (
                                 <span key={item.code} className="py-2 flex gap-2 items-center border-b border-gray-200">
-                                    <input type={'radio'} name={name} id={item.code} value={item.code} />
+                                    <input
+                                        type={'radio'}
+                                        name={name}
+                                        id={item.code}
+                                        value={item.code}
+                                        checked={
+                                            item.code ===
+                                            queries[(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']
+                                                ? true
+                                                : false
+                                        }
+                                        onClick={(e) =>
+                                            handleSubmit(e, {
+                                                [name === 'Phòng trọ, nhà trọ' ? 'category' : 'province']: item.value,
+                                                [(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']:
+                                                    item.code,
+                                            })
+                                        }
+                                    />
                                     <label htmlFor={item.code}>{item.value}</label>
                                 </span>
                             );
