@@ -1,14 +1,26 @@
-import { clearConfigCache } from 'prettier';
 import React, { useEffect, useState } from 'react';
 import icons from '~/assets/icons';
-import Item from './Item';
+
 import { getNumbersPrice, getNumbersArea } from '~/ultils/common/getNumber';
+import { getCodesArea, getCodesPrice } from '~/ultils/common/getCodes';
 
 const { GrLinkPrevious } = icons;
 
-const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
-    const [percent1, setPercent1] = useState(0);
-    const [percent2, setPercent2] = useState(100);
+const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax, defaultText }) => {
+    const [percent1, setPercent1] = useState(
+        name === 'Chọn giá' && arrMinMax?.priceArr
+            ? arrMinMax?.priceArr[0]
+            : name === 'Chọn diện tích' && arrMinMax?.areaArr
+            ? arrMinMax?.areaArr[0]
+            : 0,
+    );
+    const [percent2, setPercent2] = useState(
+        name === 'Chọn giá' && arrMinMax?.priceArr
+            ? arrMinMax?.priceArr[1]
+            : name === 'Chọn diện tích' && arrMinMax?.areaArr
+            ? arrMinMax?.areaArr[1]
+            : 100,
+    );
     const [activeEl, setActiveEl] = useState();
     useEffect(() => {
         const aciveTrackEl = document.getElementById('track-active');
@@ -69,6 +81,25 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
     //     console.log('start', convert100toTarget(percent1));
     //     console.log('end', convert100toTarget(percent2));
     // };
+    const handleBeforeSubmit = (e) => {
+        const gaps =
+            name === 'Chọn giá'
+                ? getCodesPrice([convert100toTarget(percent1), convert100toTarget(percent2)], content)
+                : name === 'Chọn diện tích'
+                ? getCodesArea([convert100toTarget(percent1), convert100toTarget(percent2)], content)
+                : [];
+        handleSubmit(
+            e,
+            {
+                [(name === 'Chọn giá' ? 'price' : 'area') + 'Code']: gaps?.map((item) => item.code),
+                [name === 'Chọn giá' ? 'price' : 'area']: `
+                Từ ${convert100toTarget(percent1)} - ${convert100toTarget(percent2)} ${
+                    name === 'Chọn giá' ? 'triệu' : 'm2'
+                }`,
+            },
+            { [(name === 'Chọn giá' ? 'price' : 'area') + 'Arr']: [percent1, percent2] },
+        );
+    };
     return (
         <div
             className="fixed top-0 left-0 right-0 bottom-0 bg-overlay-70 flex z-20 justify-center items-center "
@@ -94,6 +125,26 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
                 </div>
                 {(name === 'Phòng trọ, nhà trọ' || name === 'Toàn quốc') && (
                     <div className="flex flex-col p-4">
+                        <span className="py-2 flex gap-2 items-center border-b border-gray-200">
+                            <input
+                                type="radio"
+                                name={name}
+                                value={defaultText || ''}
+                                id="default"
+                                checked={
+                                    !queries[(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']
+                                        ? true
+                                        : false
+                                }
+                                onChange={(e) =>
+                                    handleSubmit(e, {
+                                        [name]: defaultText,
+                                        [(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']: null,
+                                    })
+                                }
+                            />
+                            <label htmlFor="default">{defaultText}</label>
+                        </span>
                         {content?.map((item) => {
                             return (
                                 <span key={item.code} className="py-2 flex gap-2 items-center border-b border-gray-200">
@@ -108,7 +159,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
                                                 ? true
                                                 : false
                                         }
-                                        onClick={(e) =>
+                                        onChange={(e) =>
                                             handleSubmit(e, {
                                                 [name === 'Phòng trọ, nhà trọ' ? 'category' : 'province']: item.value,
                                                 [(name === 'Phòng trọ, nhà trọ' ? 'category' : 'province') + 'Code']:
@@ -203,8 +254,8 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
                                         <button
                                             key={item.code}
                                             onClick={() => handleActive(item.code, item.value)}
-                                            className={`px-4 py-2 bg-gray-200 rounded-md ${
-                                                item.code === activeEl ? 'bg-blue-500 text-white ' : ' '
+                                            className={`px-4 py-2  rounded-md ${
+                                                item.code === activeEl ? 'bg-blue-500 text-white ' : 'bg-gray-200 '
                                             }cursor-pointer `}
                                         >
                                             {item.value}
@@ -220,7 +271,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
                     <button
                         type="button"
                         className="w-full bg-[#FFA500] py-2 font-medium rounded-bl-md rounded-br-md capitalize"
-                        onClick={handleSubmit}
+                        onClick={handleBeforeSubmit}
                     >
                         ÁP DỤNG
                     </button>

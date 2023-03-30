@@ -4,16 +4,7 @@ import icons from '~/assets/icons';
 import { SearchItem } from '~/components';
 import Modal from '~/components/Modal';
 
-const {
-    AiOutlinePlusCircle,
-    GrNext,
-    BsChevronRight,
-    HiOutlineLocationMarker,
-    TbReportMoney,
-    RiCrop2Line,
-    MdOutlineHouseSiding,
-    FiSearch,
-} = icons;
+const { BsChevronRight, HiOutlineLocationMarker, TbReportMoney, RiCrop2Line, MdOutlineHouseSiding, FiSearch } = icons;
 
 function Search() {
     const [isShowModel, setIsShowModal] = useState(false);
@@ -21,18 +12,27 @@ function Search() {
     const [name, setName] = useState('');
     const { provinces, areas, prices, categories } = useSelector((state) => state.app);
     const [queries, setQueries] = useState({});
+    const [arrMinMax, setArrMinMax] = useState({});
+    const [defaultText, setDefaultText] = useState('');
 
-    const handleShowModal = (content, name) => {
+    const handleShowModal = (content, name, defaultText) => {
         setContent(content);
         setName(name);
+        setDefaultText(defaultText);
         setIsShowModal(true);
     };
-    const handleSubmit = (e, query) => {
-        e.stopPropagation();
-        setQueries((prev) => ({ ...prev, ...query }));
-        setIsShowModal(false);
-    };
-   
+
+    const handleSubmit = useCallback(
+        (e, query, arrMaxMin) => {
+            e.stopPropagation();
+            setQueries((prev) => ({ ...prev, ...query }));
+            setIsShowModal(false);
+            arrMaxMin && setArrMinMax((prev) => ({ ...prev, ...arrMaxMin }));
+        },
+        [isShowModel, queries],
+    );
+    console.log(arrMinMax);
+
     return (
         <>
             <div className="p-[10px] w-3/5 my-3 bg-[#febb02] rounded-lg flex-col lg:flex-row flex items-center justify-around gap-2">
@@ -80,8 +80,17 @@ function Search() {
                     Tìm kiếm
                 </button>
             </div>
+
             {isShowModel && (
-                <Modal handleSubmit={handleSubmit} queries= {queries} setIsShowModal={setIsShowModal} content={content} name={name} />
+                <Modal
+                    handleSubmit={handleSubmit}
+                    queries={queries}
+                    setIsShowModal={setIsShowModal}
+                    content={content}
+                    name={name}
+                    arrMinMax={arrMinMax}
+                    defaultText={defaultText}
+                />
             )}
         </>
     );

@@ -30,3 +30,19 @@ export const getCodeArea = (totals) => {
         };
     });
 };
+export const getCodesPrice = (arrMaxMin, prices) => {
+    const priceWithMinMax = getCodePrice(prices);
+    return priceWithMinMax.filter(
+        (item) =>
+            (item.min >= arrMaxMin[0] && item.min <= arrMaxMin[1]) ||
+            (item >= arrMaxMin[0] && item.max <= arrMaxMin[1]),
+    );
+};
+export const getCodesArea = (arrMaxMin, prices) => {
+    const priceWithMinMax = getCodePrice(prices);
+    return priceWithMinMax.filter(
+        (item) =>
+            (item.min >= arrMaxMin[0] && item.min <= arrMaxMin[1]) ||
+            (item >= arrMaxMin[0] && item.max <= arrMaxMin[1]),
+    );
+};
