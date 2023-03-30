@@ -88,6 +88,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                 : name === 'Chọn diện tích'
                 ? getCodesArea([convert100toTarget(percent1), convert100toTarget(percent2)], content)
                 : [];
+        console.log(getCodesPrice([convert100toTarget(percent1), convert100toTarget(percent2)], content), name === 'Chọn giá');
         handleSubmit(
             e,
             {

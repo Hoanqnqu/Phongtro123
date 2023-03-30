@@ -31,7 +31,14 @@ function Search() {
         },
         [isShowModel, queries],
     );
-    console.log(arrMinMax);
+    const handleSearch = () => {
+        const queryCodes = Object.entries(queries).filter((item) => item[0].includes('Code'));
+        let queryCodesObj = {};
+        queryCodes.forEach((item) => {
+            queryCodesObj[item[0]] = item[1];
+        });
+        console.log(queryCodesObj);
+    };
 
     return (
         <>
@@ -74,6 +81,7 @@ function Search() {
                 </span>
                 <button
                     type="button"
+                    onClick={handleSearch}
                     className="outline-none flex-1 cursor-pointer  py-2 px-4 w-full bg-secondary1 text-[13.3px] flex items-center justify-center gap-2 text-white font-medium rounded-md"
                 >
                     <FiSearch />
