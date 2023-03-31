@@ -17,7 +17,7 @@ export const register = (payload) => async (dispath) => {
             });
         }
     } catch (error) {
-        dispath({ 
+        dispath({
             type: actiontypes.REGISTER_FAIL,
             data: null,
         });

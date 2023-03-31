@@ -4,7 +4,7 @@ import PageNumber from './PageNumber';
 import icons from '~/assets/icons';
 import { useSearchParams } from 'react-router-dom';
 
-const { GrLinkNext, GrLinkPrevious } = icons;
+const { GrLinkNext } = icons;
 //const arrNumber = [1, 2, 3];
 function Pagination() {
     const { count, posts } = useSelector((state) => state.post);
@@ -22,19 +22,19 @@ function Pagination() {
 
     useEffect(() => {
         let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POST);
-        let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
-        let start = currentPage - 1 <= 0 ? 1 : currentPage - 1;
+        let end = currentPage + 2 > maxPage ? maxPage : currentPage + 2;
+        let start = currentPage - 2 <= 1 ? 1 : currentPage - 2;
         let temp = [];
         for (let i = start; i <= end; i++) temp.push(i);
         setArrPage(temp);
         currentPage + 1 >= maxPage ? setIsHideEnd(true) : setIsHideEnd(false);
-        currentPage <= 2 ? setIsHideStart(true) : setIsHideStart(false);
+        currentPage <= 3 ? setIsHideStart(true) : setIsHideStart(false);
     }, [count, posts, currentPage]);
 
     return (
         <div className="flex items-center justify-center gap-2 py-5">
-            {!isHideStart && <PageNumber icon={<GrLinkPrevious />} text={1} setCurrentPage={setCurrentPage} />}
-            {!isHideStart && <PageNumber text={'...'} />}
+            {!isHideStart && <PageNumber text={1} setCurrentPage={setCurrentPage} />}
+            {!isHideStart && currentPage !== 4 && <PageNumber text={'...'} />}
             {arrPage.length > 0 &&
                 arrPage.map((item) => {
                     return (

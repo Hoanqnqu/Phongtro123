@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 
 import icons from '~/assets/icons';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { formatVietnameseToString } from '~/ultils/common';
 
 const indexs = [0, 1, 2, 3];
@@ -12,7 +12,7 @@ function Item({ images, address, attributes, description, star, title, user, id 
     for (let i = 0; i < star; i++) {
         stars.push(i);
     }
-    const navigate = useNavigate();
+
     const [isHoverHeart, setIshoverHeart] = useState(false);
 
     return (
@@ -25,9 +25,7 @@ function Item({ images, address, attributes, description, star, title, user, id 
                     images
                         .filter((i, index) => indexs.some((i) => i === index))
                         ?.map((i, index) => {
-                            return (
-                                <img src={i} key={index} alt="preview" className="w-[140px] h-[120px] object-cover" />
-                            );
+                            return <img src={i} key={index} alt="preview" className="w-[47%] h-[120px] object-cover" />;
                         })}
 
                 <span className="bg-overlay-70 text-white px-2 rounded-md absolute left-1 bottom-4">
