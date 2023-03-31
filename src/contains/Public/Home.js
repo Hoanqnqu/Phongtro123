@@ -3,27 +3,27 @@ import { Outlet } from 'react-router-dom';
 import { Contact, Intro } from '~/components';
 import { Header, Search } from '~/contains/Public';
 import Navigation from './Navigation';
-import { useSearchParams } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '~/store/actions';
-import { apiGetCurrentUser } from '~/services/user';
+
 
 function Home() {
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const [params] = useSearchParams();
+    const { currentData } = useSelector((state) => state.user);
+
     const dispath = useDispatch();
-    useEffect(() => {
-        const fetchCurrent = async () => {
-            const response = await apiGetCurrentUser();
-            console.log(response);
-        };
-        isLoggedIn && fetchCurrent();
-    }, [isLoggedIn]);
+
     useEffect(() => {
         dispath(actions.getPrices());
         dispath(actions.getAreas());
         dispath(actions.getProvince());
-    }, [params]);
+    }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            isLoggedIn && dispath(actions.getCurrent());
+        }, 100);
+    }, [isLoggedIn]);
     return (
         <div className="w-full flex gap-2 flex-col items-center h-full">
             <Header />

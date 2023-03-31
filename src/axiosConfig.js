@@ -13,7 +13,7 @@ instance.interceptors.request.use(
             window.localStorage.getItem('persist:auth') &&
             JSON.parse(window.localStorage.getItem('persist:auth'))?.token?.slice(1, -1);
         config.headers = {
-            authorization: `Bearer ${token}`,
+            authorization: token ? `Bearer ${token}` : null,
         };
         return config;
     },

@@ -11,6 +11,8 @@ const { AiOutlinePlusCircle } = icons;
 function Header() {
     const navigate = useNavigate();
     const dispath = useDispatch();
+    const { currentData } = useSelector((state) => state.user);
+
     const [searchParams] = useSearchParams();
     const headerRef = useRef();
     const { isLoggedIn } = useSelector((state) => state.auth);
@@ -47,7 +49,7 @@ function Header() {
                 )}
                 {isLoggedIn && (
                     <div className="flex items-center gap-1">
-                        <small>Hoàng đẹp trai !</small>
+                        <small>{currentData.name}</small>
 
                         <Button
                             text="Đăng xuất"
