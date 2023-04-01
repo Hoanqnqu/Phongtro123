@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Logo from '~/assets/images/logo.svg';
 import icons from '~/assets/icons';
-import { Button } from '~/components';
+import { Button, User } from '~/components';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { path } from '~/ultils/containt';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '~/store/actions';
 import menuManage from '~/ultils/menuManage';
 
-const { AiOutlinePlusCircle, AiOutlineLogout } = icons;
+const { AiOutlinePlusCircle, AiOutlineLogout, BsChevronDown } = icons;
 function Header() {
     const navigate = useNavigate();
     const dispath = useDispatch();
@@ -49,14 +49,15 @@ function Header() {
                     </div>
                 )}
                 {isLoggedIn && (
-                    <div className="flex items-center gap-1 relative">
-                        <small>{currentData.name}</small>
+                    <div className="flex items-center gap-3 relative">
+                        <User />
 
                         <Button
                             text="Quản lí tài khoản"
                             textColor="text-white"
                             bgColor="bg-[#3961fb]"
                             px="px-4"
+                            IcAfter={BsChevronDown}
                             onClick={() => setIsShowMenu((prev) => !prev)}
                         />
                         {isShowMenu && (
