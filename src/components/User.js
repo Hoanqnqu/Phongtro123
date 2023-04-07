@@ -1,5 +1,5 @@
 import React from 'react';
-import { Selector, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import avatar from '~/assets/images/avatar.jpg';
 const User = () => {
     const { currentData } = useSelector((state) => state.user);
@@ -15,7 +15,7 @@ const User = () => {
                     Xin chào, <span className="font-semibold">{currentData?.name}</span>
                 </span>
                 <span>
-                    Mã tài khoản: <span className="font-semibold">{`${currentData?.id.slice(0, 10)}...`}</span>
+                    Mã tài khoản: <span className="font-semibold">{`${currentData?.id?.slice(0,10)}...`}</span>
                 </span>
             </div>
         </div>

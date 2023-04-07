@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { path } from '~/ultils/containt';
 import { DetailPost, Home, Homepage, Login, Rental, SearchDetail } from './contains/Public';
+import { CreatePost, System } from './contains/System';
 function App() {
     return (
         <div className="w-creen bg-primary">
@@ -15,6 +16,9 @@ function App() {
                     <Route path={path.SEARCH} element={<SearchDetail />} />
 
                     <Route path={path.DETAIL_POST_TITLE_POSTID} element={<DetailPost />} />
+                </Route>
+                <Route path={path.SYSTEM} element = {<System/>}>
+                    <Route path={path.CREATE_POST} element={<CreatePost/>}/>
                 </Route>
             </Routes>
         </div>
