@@ -13,3 +13,8 @@ export { default as Contact } from '~/components/Contact';
 export { default as RelatedPost } from '~/components/RelatedPost';
 export { default as ItemNews } from '~/components/ItemNews';
 export { default as User } from '~/components/User';
+export { default as Overview } from '~/components/Overview';
+export { default as Address } from '~/components/Address';
+export { default as SelectAddress } from '~/components/SelectAddress';
+
+

@@ -25,7 +25,7 @@ const SideBar = () => {
                     />
                     <div className="flex flex-col justify-center">
                         <span className=" font-semibold">{currentData?.name}</span>
-                        <smail>{currentData?.phone}</smail>
+                        <small>{currentData?.phone}</small>
                     </div>
                 </div>
                 <span>
