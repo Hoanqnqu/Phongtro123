@@ -13,17 +13,13 @@ function Home() {
     const { currentData } = useSelector((state) => state.user);
 
     const dispath = useDispatch();
-
+    
     useEffect(() => {
         dispath(actions.getPrices());
         dispath(actions.getAreas());
         dispath(actions.getProvince());
     }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            isLoggedIn && dispath(actions.getCurrent());
-        }, 100);
-    }, [isLoggedIn]);
+    
     return (
         <div className="w-full flex gap-2 flex-col items-center h-full">
             <Header />

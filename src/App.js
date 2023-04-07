@@ -2,7 +2,18 @@ import { Routes, Route } from 'react-router-dom';
 import { path } from '~/ultils/containt';
 import { DetailPost, Home, Homepage, Login, Rental, SearchDetail } from './contains/Public';
 import { CreatePost, System } from './contains/System';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import * as actions from '~/store/actions';
 function App() {
+    const dispath = useDispatch();
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        setTimeout(() => {
+            isLoggedIn && dispath(actions.getCurrent());
+        }, 100);
+    }, [isLoggedIn]);
     return (
         <div className="w-creen bg-primary">
             <Routes>
@@ -17,8 +28,8 @@ function App() {
 
                     <Route path={path.DETAIL_POST_TITLE_POSTID} element={<DetailPost />} />
                 </Route>
-                <Route path={path.SYSTEM} element = {<System/>}>
-                    <Route path={path.CREATE_POST} element={<CreatePost/>}/>
+                <Route path={path.SYSTEM} element={<System />}>
+                    <Route path={path.CREATE_POST} element={<CreatePost />} />
                 </Route>
             </Routes>
         </div>

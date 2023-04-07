@@ -1,7 +1,7 @@
 import icons from '~/assets/icons';
 const { ImPencil2, MdOutlineLibraryBooks, BiUserPin } = icons;
 
-const menuManage = [
+const menuSideBar = [
     {
         id: 1,
         text: 'Đăng tin cho thuê',
@@ -16,9 +16,16 @@ const menuManage = [
     },
     {
         id: 3,
-        text: 'Thông tin tài khoản',
-        path: '/he-thong/thong-tin-tai-khoan',
+        text: 'Sửa thông tin cá nhân',
+        path: '/he-thong/sua-thong-tin-ca-nhan',
         icon: <BiUserPin />,
     },
+    {
+        id: 4,
+        text: 'Liên hệ',
+        path: '/he-thong/lien-he',
+        icon: <BiUserPin />,
+    },
+   
 ];
-export default menuManage;
+export default menuSideBar;

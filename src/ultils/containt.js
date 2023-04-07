@@ -9,8 +9,8 @@ export const path = {
     CHO_THUE_PHONG_TRO: 'cho-thue-phong-tro',
 
     DETAIL_POST_TITLE_POSTID: 'chi-tiet/*',
-    SYSTEM:'/he-thong/*',
-    CREATE_POST:'tao-moi-tin-dang'
+    SYSTEM: '/he-thong/*',
+    CREATE_POST: 'tao-moi-tin-dang',
 };
 export const text = {
     HOME_TITLE: 'Kênh thông tin Phòng Trọ số 1 Việt Nam',
