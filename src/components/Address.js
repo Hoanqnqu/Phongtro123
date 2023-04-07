@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import SelectAddress from './SelectAddress';
+import Select from './Select';
 import { apiGetPublicDistricts, apiGetPublicProvinces } from '~/services';
+import InputReadOnly from './InputReadOnly';
 const Address = () => {
     const [provinces, setProvinces] = useState([]);
     const [province, setProvince] = useState();
@@ -36,14 +37,14 @@ const Address = () => {
             <h2 className="font-semibold text-xl py-4">Địa chỉ cho thuê</h2>
             <div className=" flex flex-col gap-4">
                 <div className="flex  items-center gap-4">
-                    <SelectAddress
+                    <Select
                         type="province"
                         value={province}
                         setValue={setProvince}
                         label={'Tỉnh/ Thành phố'}
                         options={provinces}
                     />
-                    <SelectAddress
+                    <Select
                         reset={reset}
                         type={'district'}
                         value={district}
@@ -53,24 +54,14 @@ const Address = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col gap-2">
-                <label htmlFor="exactly-address" className="font-medium">
-                    Địa chỉ chính xác
-                </label>
-                <input
-                    id="exactly-address"
-                    type="text"
-                    readOnly
-                    value={`${
-                        district
-                            ? `${
-                                  districts.find((districtItem) => districtItem?.district_id === district).district_name
-                              },`
-                            : ''
-                    } ${province ? `${provinces?.find((item) => item.province_id === province).province_name} ` : ''}`}
-                    className="border border-gray-200 rounded-md outline-none bg-gray-100 p-2 w-full"
-                />
-            </div>
+            <InputReadOnly
+                label={'Địa chỉ chính xác'}
+                value={`${
+                    district
+                        ? `${districts.find((districtItem) => districtItem?.district_id === district).district_name},`
+                        : ''
+                } ${province ? `${provinces?.find((item) => item.province_id === province).province_name} ` : ''}`}
+            />
         </div>
     );
 };

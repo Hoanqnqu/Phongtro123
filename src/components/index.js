@@ -15,6 +15,5 @@ export { default as ItemNews } from '~/components/ItemNews';
 export { default as User } from '~/components/User';
 export { default as Overview } from '~/components/Overview';
 export { default as Address } from '~/components/Address';
-export { default as SelectAddress } from '~/components/SelectAddress';
-
-
+export { default as Select } from '~/components/Select';
+export { default as InputFormV2 } from '~/components/InputFormV2';
