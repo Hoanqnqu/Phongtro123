@@ -7,7 +7,7 @@ const Select = ({ label, options, value, setValue, type, reset }) => {
                 {label}
             </label>
             <select
-                value={reset ? '' : value}
+                value={reset ? '' : value ? value : ''}
                 onChange={(e) => setValue(e.target.value)}
                 id="select-address"
                 className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"

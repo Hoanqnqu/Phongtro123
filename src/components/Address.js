@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Select from './Select';
 import { apiGetPublicDistricts, apiGetPublicProvinces } from '~/services';
 import InputReadOnly from './InputReadOnly';
-const Address = () => {
+const Address = ({ payload, setPayload }) => {
     const [provinces, setProvinces] = useState([]);
     const [province, setProvince] = useState();
     const [district, setDistrict] = useState();
@@ -32,6 +32,18 @@ const Address = () => {
             setDistricts([]);
         }
     }, [province]);
+
+    useEffect(() => {
+        setPayload((prev) => ({
+            ...prev,
+            address: `${
+                district
+                    ? `${districts.find((districtItem) => districtItem?.district_id === district).district_name},`
+                    : ''
+            } ${province ? `${provinces?.find((item) => item.province_id === province).province_name} ` : ''}`,
+            province: province ? provinces?.find((item) => item.province_id === province).province_name : '',
+        }));
+    }, [province, district]);
     return (
         <div>
             <h2 className="font-semibold text-xl py-4">Địa chỉ cho thuê</h2>
@@ -66,4 +78,4 @@ const Address = () => {
     );
 };
 
-export default Address;
+export default memo(Address);
