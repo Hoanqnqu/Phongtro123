@@ -1,12 +1,14 @@
 import React from 'react';
 
-const InputFormV2 = ({ label, unit }) => {
+const InputFormV2 = ({ label, unit, value, setValue, name, small }) => {
     return (
         <div>
             <label htmlFor="title">{label}</label>
             <div className="flex items-center">
                 <input
+                    value={value}
                     type="text"
+                    onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
                     id="title"
                     className={`w-full ${
                         unit ? 'rounded-tl-md rounded-bl-md' : 'rounded-md'
@@ -18,6 +20,7 @@ const InputFormV2 = ({ label, unit }) => {
                     </span>
                 )}
             </div>
+            {small && <small className="opacity-70">{small}</small>}
         </div>
     );
 };

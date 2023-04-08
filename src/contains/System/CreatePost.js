@@ -3,7 +3,7 @@ import { Address, Overview } from '~/components';
 import { BsCameraFill } from 'react-icons/bs';
 const CreatePost = () => {
     const [payload, setPayload] = useState({
-        categoiesCode: '',
+        categoryCode: '',
         title: '',
         star: '',
         priceNumber: '',
@@ -23,7 +23,7 @@ const CreatePost = () => {
             <div className="flex gap-4">
                 <div className="py-4 flex flex-col gap-8 flex-auto">
                     <Address setPayload={setPayload} />
-                    <Overview setPayload={setPayload} />
+                    <Overview payload={payload} setPayload={setPayload} />
                     <div className="w-full">
                         <h2 className="font-semibold text-xl py-4">Hình ảnh</h2>
                         <small>Cập nhật hình ảnh rõ ràng sẽ cho thuê nhanh hơn</small>

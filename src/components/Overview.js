@@ -5,10 +5,10 @@ import InputReadOnly from './InputReadOnly';
 import InputFormV2 from './InputFormV2';
 
 const targets = [
-    { code: 'male', value: 'Nam' },
-    { code: 'female', value: 'Nữ' },
+    { code: 'Nam', value: 'Nam' },
+    { code: 'Nữ', value: 'Nữ' },
 ];
-const Overview = () => {
+const Overview = ({ payload, setPayload }) => {
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
     return (
@@ -16,12 +16,21 @@ const Overview = () => {
             <h2 className="font-semibold text-xl py-4">Thông tin mô tả</h2>
             <div className="w-full flex flex-col gap-4">
                 <div className="w-1/2">
-                    <Select className="w-1/2" label={'Loại chuyên mục'} options={categories} />
+                    <Select
+                        className="w-1/2"
+                        label={'Loại chuyên mục'}
+                        name={'categoryCode'}
+                        setValue={setPayload}
+                        options={categories}
+                        value={payload?.categoryCode}
+                    />
                 </div>
-                <InputFormV2 label={'Tiêu đề'} />
+                <InputFormV2 label={'Tiêu đề'} value={payload?.title} setValue={setPayload} name="title" />
                 <div className="flex flex-col gap-2">
                     <label htmlFor="desc">Nội dung mô tả</label>
                     <textarea
+                        value={payload?.description}
+                        onChange={(e) => setPayload((prev) => ({ ...prev, description: e.target.value }))}
                         id="desc"
                         cols={30}
                         rows="10"
@@ -31,11 +40,29 @@ const Overview = () => {
                 <div className="w-1/2 flex flex-col gap-4">
                     <InputReadOnly label={'Thông tin liên hệ'} value={currentData?.name || currentData.username} />
                     <InputReadOnly label={'Điện thoai'} value={currentData?.phone} />
-                    <InputFormV2 label={'Giá cho thuê'} unit={'đồng'} />
-                    <InputFormV2 label={'Diện tích'} unit={'m2'} />
-                    <Select label={'Đối tượng cho thuê'} options={targets} />
+                    <InputFormV2
+                        label={'Giá cho thuê'}
+                        unit={'đồng'}
+                        small="Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000 "
+                        value={payload?.price}
+                        setValue={setPayload}
+                        name="price"
+                    />
+                    <InputFormV2
+                        label={'Diện tích'}
+                        unit={'m2'}
+                        value={payload?.area}
+                        setValue={setPayload}
+                        name="area"
+                    />
+                    <Select
+                        label={'Đối tượng cho thuê'}
+                        options={targets}
+                        value={payload?.target}
+                        setValue={setPayload}
+                        name="target"
+                    />
                 </div>
-                
             </div>
         </div>
     );
