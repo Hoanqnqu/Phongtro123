@@ -1,20 +1,7 @@
 import React from 'react';
 import { LineWave } from 'react-loader-spinner';
 const Loading = () => {
-    return (
-        <LineWave
-            height="100"
-            width="100"
-            color="#4fa94d"
-            ariaLabel="line-wave"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            firstLineColor=""
-            middleLineColor=""
-            lastLineColor=""
-        />
-    );
+    return <LineWave color="red" firstLineColor="blue" middleLineColor="green" lastLineColor="grey" />;
 };
 
 export default Loading;

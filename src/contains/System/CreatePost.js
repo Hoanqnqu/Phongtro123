@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Address, Overview } from '~/components';
+import { Address, Loading, Overview } from '~/components';
 import { apiUploadImages } from '~/services';
 import icons from '~/assets/icons';
 
@@ -20,8 +20,10 @@ const CreatePost = () => {
         target: '',
         province: '',
     });
+    const [isLoading, setIsLoading] = useState(false);
     const [imagesPreview, setImagesPreview] = useState([]);
     const handleFiles = async (e) => {
+        setIsLoading(true);
         let images = [];
         e.stopPropagation();
         const files = e.target.files;
@@ -34,6 +36,8 @@ const CreatePost = () => {
             if (response.status === 200) images = [...images, response?.data?.secure_url];
             console.log(images);
         }
+        setIsLoading(false);
+
         setImagesPreview((prev) => [...prev, ...images]);
         setPayload((prev) => ({ ...prev, images: [...payload.images, ...images] }));
     };
@@ -56,10 +60,14 @@ const CreatePost = () => {
                                 className="w-full border-2 flex items-center gap-4 flex-col justify-center rounded-md my-4 h-[200px] border-dashed border-gray-400"
                                 htmlFor="file"
                             >
-                                <div className="flex flex-col justify-center items-center">
-                                    <BsCameraFill size={50} color="blue" />
-                                    Thêm ảnh
-                                </div>
+                                {isLoading ? (
+                                    <Loading />
+                                ) : (
+                                    <div className="flex flex-col justify-center items-center">
+                                        <BsCameraFill size={50} color="blue" />
+                                        Thêm ảnh
+                                    </div>
+                                )}
                             </label>
                             <input onChange={handleFiles} hidden type="file" id="file" multiple />
                             <div className="w-full">
