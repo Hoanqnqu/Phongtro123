@@ -38,7 +38,7 @@ const Overview = ({ payload, setPayload }) => {
                     ></textarea>
                 </div>
                 <div className="w-1/2 flex flex-col gap-4">
-                    <InputReadOnly label={'Thông tin liên hệ'} value={currentData?.name || currentData.username} />
+                    <InputReadOnly label={'Thông tin liên hệ'} value={currentData?.name || currentData?.username} />
                     <InputReadOnly label={'Điện thoai'} value={currentData?.phone} />
                     <InputFormV2
                         label={'Giá cho thuê'}

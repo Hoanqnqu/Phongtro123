@@ -4,8 +4,8 @@ import { apiGetPublicDistricts, apiGetPublicProvinces } from '~/services';
 import InputReadOnly from './InputReadOnly';
 const Address = ({ payload, setPayload }) => {
     const [provinces, setProvinces] = useState([]);
-    const [province, setProvince] = useState();
-    const [district, setDistrict] = useState();
+    const [province, setProvince] = useState('');
+    const [district, setDistrict] = useState('');
     const [districts, setDistricts] = useState([]);
     const [reset, setReset] = useState(false);
 
