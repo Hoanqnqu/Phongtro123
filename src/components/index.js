@@ -17,3 +17,4 @@ export { default as Overview } from '~/components/Overview';
 export { default as Address } from '~/components/Address';
 export { default as Select } from '~/components/Select';
 export { default as InputFormV2 } from '~/components/InputFormV2';
+export { default as Loading } from '~/components/Loading';

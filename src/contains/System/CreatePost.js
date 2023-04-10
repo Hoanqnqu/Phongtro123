@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Address, Overview } from '~/components';
-import { BsCameraFill } from 'react-icons/bs';
 import { apiUploadImages } from '~/services';
+import icons from '~/assets/icons';
+
+const { BsCameraFill, ImBin } = icons;
+
 const CreatePost = () => {
     const [payload, setPayload] = useState({
         categoryCode: '',
@@ -31,10 +34,13 @@ const CreatePost = () => {
             if (response.status === 200) images = [...images, response?.data?.secure_url];
             console.log(images);
         }
-        setImagesPreview(images);
-        setPayload((prev) => ({ ...prev, images: JSON.stringify(images) }));
+        setImagesPreview((prev) => [...prev, ...images]);
+        setPayload((prev) => ({ ...prev, images: [...payload.images, ...images] }));
     };
-    console.log(payload);
+    const handleDeleteImage = (image) => {
+        setImagesPreview((prev) => prev?.filter((item) => item !== image));
+        // setPayload((prev) => ({ ...prev, images: [...payload.images, ...images] }));
+    };
     return (
         <div className="px-6 ">
             <h1 className="text-3xl font-medium py-4 border-b border-gray-200">Đăng tin mới</h1>
@@ -50,15 +56,31 @@ const CreatePost = () => {
                                 className="w-full border-2 flex items-center gap-4 flex-col justify-center rounded-md my-4 h-[200px] border-dashed border-gray-400"
                                 htmlFor="file"
                             >
-                                <BsCameraFill size={50} color="blue" />
-                                Thêm ảnh
+                                <div className="flex flex-col justify-center items-center">
+                                    <BsCameraFill size={50} color="blue" />
+                                    Thêm ảnh
+                                </div>
                             </label>
                             <input onChange={handleFiles} hidden type="file" id="file" multiple />
                             <div className="w-full">
                                 <h3 className="font-medium">Ảnh đã chọn</h3>
                                 <div className="flex    ">
                                     {imagesPreview?.map((item) => (
-                                        <img src={item} alt="preview" className="w-1/3 h-1/3 object-cover rounded-md" />
+                                        <div key={item} className="relative w-1/3 h-1/3 ">
+                                            <img
+                                                src={item}
+                                                alt="preview"
+                                                className=" object-cover rounded-md w-full h-full"
+                                            />
+                                            <span
+                                                title="Xóa"
+                                                onClick={() => handleDeleteImage(item)}
+                                                className="absolute top-0 right-0 p-2 cursor-pointer bg-gray-300 rounded-full hover:bg-slate-500"
+                                            >
+                                                {' '}
+                                                <ImBin />
+                                            </span>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
