@@ -2,7 +2,7 @@ import React, { useEffect, useState, memo } from 'react';
 import Select from './Select';
 import { apiGetPublicDistricts, apiGetPublicProvinces } from '~/services';
 import InputReadOnly from './InputReadOnly';
-const Address = ({ payload, setPayload }) => {
+const Address = ({ payload, setPayload, isReset }) => {
     const [provinces, setProvinces] = useState([]);
     const [province, setProvince] = useState('');
     const [district, setDistrict] = useState('');
@@ -32,15 +32,18 @@ const Address = ({ payload, setPayload }) => {
             setDistricts([]);
         }
     }, [province]);
+    useEffect(() => {
+        setProvince('');
+    }, [isReset]);
 
     useEffect(() => {
         setPayload((prev) => ({
             ...prev,
             address: `${
                 district
-                    ? `${districts.find((districtItem) => districtItem?.district_id === district).district_name},`
+                    ? `${districts.find((districtItem) => districtItem?.district_id === district).district_name}, `
                     : ''
-            } ${province ? `${provinces?.find((item) => item.province_id === province).province_name} ` : ''}`,
+            }${province ? `${provinces?.find((item) => item.province_id === province).province_name} ` : ''}`,
             province: province ? provinces?.find((item) => item.province_id === province).province_name : '',
         }));
     }, [province, district]);

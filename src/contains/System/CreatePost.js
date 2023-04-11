@@ -24,10 +24,11 @@ const CreatePost = () => {
         target: '',
         province: '',
     });
-    const { prices, areas, provinces, categories } = useSelector((state) => state.app);
+    const { prices, areas, categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
     const [isLoading, setIsLoading] = useState(false);
     const [imagesPreview, setImagesPreview] = useState([]);
+    const [isReset, setIsReset] = useState(false);
     const handleFiles = async (e) => {
         setIsLoading(true);
         let images = [];
@@ -51,7 +52,8 @@ const CreatePost = () => {
         setImagesPreview((prev) => prev?.filter((item) => item !== image));
         setPayload((prev) => ({ ...prev, images: prev.images?.filter((item) => item !== image) }));
     };
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         let priceCodeArr = getCodesPrice(+payload.priceNumber / Math.pow(10, 6), prices, 1, 15);
         let priceCode = priceCodeArr[0]?.code;
         let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 20, 90);
@@ -86,6 +88,7 @@ const CreatePost = () => {
                     province: '',
                 });
                 setImagesPreview([]);
+                setIsReset((prev) => !prev);
             });
         } else {
             Swal.fire('Oops!', 'Có lỗi gì đó', 'error');
@@ -97,8 +100,8 @@ const CreatePost = () => {
         <div className="px-6 ">
             <h1 className="text-3xl font-medium py-4 border-b border-gray-200">Đăng tin mới</h1>
             <div className="flex gap-4">
-                <div className="py-4 flex flex-col gap-8 flex-auto">
-                    <Address setPayload={setPayload} />
+                <form className="py-4 flex flex-col gap-8 flex-auto" onSubmit={handleSubmit}>
+                    <Address key={'address_1'} payload={payload} setPayload={setPayload} isReset={isReset} />
                     <Overview payload={payload} setPayload={setPayload} />
                     <div className="w-full">
                         <h2 className="font-semibold text-xl py-4">Hình ảnh</h2>
@@ -141,14 +144,14 @@ const CreatePost = () => {
                                 </div>
                             </div>
                             <Button
+                                type={'submit'}
                                 text={'Tạo mới'}
-                                onClick={handleSubmit}
                                 bgColor={'bg-green-500'}
                                 textColor={'text-white'}
                             />
                         </div>
                     </div>
-                </div>
+                </form>
                 <div className="w-1/3 flex-none">map</div>
             </div>
         </div>

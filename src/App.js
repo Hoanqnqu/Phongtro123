@@ -5,13 +5,12 @@ import { CreatePost, System } from './contains/System';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import * as actions from '~/store/actions';
-import { getCodesArea,getCodesPrice } from './ultils/common/getCodes';
+
 
 function App() {
     const dispath = useDispatch();
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const { prices, areas } = useSelector((state) => state.app);
-
+   
 
     useEffect(() => {
         setTimeout(() => {
@@ -25,7 +24,7 @@ function App() {
     }, []);
 
     return (
-        <div className="w-creen bg-primary">
+        <div className="w-creen bg-primary overflow-hidden">
             <Routes>
                 <Route path={path.HOME} element={<Home />}>
                     <Route path="*" element={<Homepage />} />

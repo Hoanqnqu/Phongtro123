@@ -1,13 +1,14 @@
 import React from 'react';
 
-const InputFormV2 = ({ label, unit, value, setValue, name, small }) => {
+const InputFormV2 = ({ label, unit, value, setValue, name, small, type }) => {
     return (
         <div>
             <label htmlFor="title">{label}</label>
             <div className="flex items-center">
                 <input
+                    required
                     value={value}
-                    type="text"
+                    type={type || 'text'}
                     onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
                     id="title"
                     className={`w-full ${

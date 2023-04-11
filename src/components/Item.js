@@ -59,8 +59,8 @@ function Item({ images, address, attributes, description, star, title, user, id 
                     </span>
                     <span className="flex-none">{attributes.acreage}</span>
                     <span className="flex-auto w-32  text-ellipsis whitespace-nowrap overflow-hidden">{`${
-                        address.split(',')[address.split(',').length - 2]
-                    }, ${address.split(',')[address.split(',').length - 1]}`}</span>
+                        address?.split(',')[address?.split(',').length - 2]
+                    }, ${address?.split(',')[address?.split(',').length - 1]}`}</span>
                 </div>
                 <p className="text-gray-500 w-full h-[50px] text-ellipsis overflow-hidden  ">{description}</p>
                 <div className="flex items-center my-5 justify-between">

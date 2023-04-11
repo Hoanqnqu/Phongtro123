@@ -1,12 +1,13 @@
 import React, { memo } from 'react';
 
-const Select = ({ label, options, value, setValue, type, reset, name }) => {
+const Select = ({ label, options, value, setValue, type, reset, name, isRequired = true }) => {
     return (
         <div className="flex flex-col gap-2 flex-1">
             <label className="font-medium" htmlFor="select-address">
                 {label}
             </label>
             <select
+                required={isRequired}
                 value={reset ? '' : value ? value : ''}
                 onChange={(e) => {
                     !name ? setValue(e.target.value) : setValue((prev) => ({ ...prev, [name]: e.target.value }));
