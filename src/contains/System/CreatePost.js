@@ -5,6 +5,8 @@ import icons from '~/assets/icons';
 import { getCodesArea, getCodesPrice } from '~/ultils/common/getCodes';
 import { useSelector } from 'react-redux';
 import { apiCreatePost } from '~/services';
+import Swal from 'sweetalert2';
+
 const { BsCameraFill, ImBin } = icons;
 
 const CreatePost = () => {
@@ -67,6 +69,27 @@ const CreatePost = () => {
         };
         console.log(finalPayload);
         const response = await apiCreatePost(finalPayload);
+        if (response?.data.err === 0) {
+            Swal.fire('Thành công', 'Đã thêm bài đăng mới', 'success').then(() => {
+                setPayload({
+                    categoryCode: '',
+                    title: '',
+                    star: '',
+                    priceNumber: '',
+                    areaNumber: '',
+                    images: '',
+                    address: '',
+                    priceCode: '',
+                    areaCode: '',
+                    description: '',
+                    target: '',
+                    province: '',
+                });
+                setImagesPreview([]);
+            });
+        } else {
+            Swal.fire('Oops!', 'Có lỗi gì đó', 'error');
+        }
         console.log(response);
     };
 
