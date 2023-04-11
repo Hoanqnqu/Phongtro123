@@ -4,6 +4,7 @@ import { apiUploadImages } from '~/services';
 import icons from '~/assets/icons';
 import { getCodesArea, getCodesPrice } from '~/ultils/common/getCodes';
 import { useSelector } from 'react-redux';
+import { apiCreatePost } from '~/services';
 const { BsCameraFill, ImBin } = icons;
 
 const CreatePost = () => {
@@ -48,7 +49,7 @@ const CreatePost = () => {
         setImagesPreview((prev) => prev?.filter((item) => item !== image));
         setPayload((prev) => ({ ...prev, images: prev.images?.filter((item) => item !== image) }));
     };
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let priceCodeArr = getCodesPrice(+payload.priceNumber / Math.pow(10, 6), prices, 1, 15);
         let priceCode = priceCodeArr[0]?.code;
         let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 20, 90);
@@ -65,6 +66,8 @@ const CreatePost = () => {
             }`,
         };
         console.log(finalPayload);
+        const response = await apiCreatePost(finalPayload);
+        console.log(response);
     };
 
     return (
