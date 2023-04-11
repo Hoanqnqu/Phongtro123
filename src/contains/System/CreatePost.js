@@ -21,7 +21,8 @@ const CreatePost = () => {
         target: '',
         province: '',
     });
-    const { prices, areas } = useSelector((state) => state.app);
+    const { prices, areas, provinces, categories } = useSelector((state) => state.app);
+    const { currentData } = useSelector((state) => state.user);
     const [isLoading, setIsLoading] = useState(false);
     const [imagesPreview, setImagesPreview] = useState([]);
     const handleFiles = async (e) => {
@@ -48,7 +49,7 @@ const CreatePost = () => {
         setPayload((prev) => ({ ...prev, images: prev.images?.filter((item) => item !== image) }));
     };
     const handleSubmit = () => {
-        let priceCodeArr = getCodesPrice(+payload.priceNumber, prices, 1, 15);
+        let priceCodeArr = getCodesPrice(+payload.priceNumber / Math.pow(10, 6), prices, 1, 15);
         let priceCode = priceCodeArr[0]?.code;
         let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 20, 90);
         let areaCode = areaCodeArr[0]?.code;
@@ -56,6 +57,12 @@ const CreatePost = () => {
             ...payload,
             priceCode,
             areaCode,
+            userId: currentData.id,
+            priceNumber: +payload.priceNumber / Math.pow(10, 6),
+            target: payload.target || 'Tất cả',
+            label: `${categories?.find((item) => item.code === payload?.categoryCode)?.value} ${
+                payload?.address?.split(',')[0]
+            }`,
         };
         console.log(finalPayload);
     };
