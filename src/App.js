@@ -5,15 +5,25 @@ import { CreatePost, System } from './contains/System';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import * as actions from '~/store/actions';
+import { getCodesArea,getCodesPrice } from './ultils/common/getCodes';
+
 function App() {
     const dispath = useDispatch();
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const { prices, areas } = useSelector((state) => state.app);
+
 
     useEffect(() => {
         setTimeout(() => {
             isLoggedIn && dispath(actions.getCurrent());
         }, 100);
     }, [isLoggedIn]);
+    useEffect(() => {
+        dispath(actions.getPrices());
+        dispath(actions.getAreas());
+        dispath(actions.getProvince());
+    }, []);
+
     return (
         <div className="w-creen bg-primary">
             <Routes>

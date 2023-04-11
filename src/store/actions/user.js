@@ -16,6 +16,7 @@ export const getCurrent = (payload) => async (dispath) => {
                 msg: response.data.msg,
                 currentData: null,
             });
+            dispath({type: actiontypes.LOGOUT})
         }
     } catch (error) {
         dispath({
@@ -23,5 +24,6 @@ export const getCurrent = (payload) => async (dispath) => {
             currentData: null,
             msg: error,
         });
+        dispath({type: actiontypes.LOGOUT})
     }
 };

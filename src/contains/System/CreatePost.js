@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Address, Loading, Overview } from '~/components';
+import { Address, Button, Loading, Overview } from '~/components';
 import { apiUploadImages } from '~/services';
 import icons from '~/assets/icons';
-
+import { getCodesArea, getCodesPrice } from '~/ultils/common/getCodes';
+import { useSelector } from 'react-redux';
 const { BsCameraFill, ImBin } = icons;
 
 const CreatePost = () => {
@@ -20,6 +21,7 @@ const CreatePost = () => {
         target: '',
         province: '',
     });
+    const { prices, areas } = useSelector((state) => state.app);
     const [isLoading, setIsLoading] = useState(false);
     const [imagesPreview, setImagesPreview] = useState([]);
     const handleFiles = async (e) => {
@@ -43,8 +45,21 @@ const CreatePost = () => {
     };
     const handleDeleteImage = (image) => {
         setImagesPreview((prev) => prev?.filter((item) => item !== image));
-        // setPayload((prev) => ({ ...prev, images: [...payload.images, ...images] }));
+        setPayload((prev) => ({ ...prev, images: prev.images?.filter((item) => item !== image) }));
     };
+    const handleSubmit = () => {
+        let priceCodeArr = getCodesPrice(+payload.priceNumber, prices, 1, 15);
+        let priceCode = priceCodeArr[0]?.code;
+        let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 20, 90);
+        let areaCode = areaCodeArr[0]?.code;
+        let finalPayload = {
+            ...payload,
+            priceCode,
+            areaCode,
+        };
+        console.log(finalPayload);
+    };
+
     return (
         <div className="px-6 ">
             <h1 className="text-3xl font-medium py-4 border-b border-gray-200">Đăng tin mới</h1>
@@ -70,7 +85,7 @@ const CreatePost = () => {
                                 )}
                             </label>
                             <input onChange={handleFiles} hidden type="file" id="file" multiple />
-                            <div className="w-full">
+                            <div className="w-full mb-6">
                                 <h3 className="font-medium">Ảnh đã chọn</h3>
                                 <div className="flex    ">
                                     {imagesPreview?.map((item) => (
@@ -92,6 +107,12 @@ const CreatePost = () => {
                                     ))}
                                 </div>
                             </div>
+                            <Button
+                                text={'Tạo mới'}
+                                onClick={handleSubmit}
+                                bgColor={'bg-green-500'}
+                                textColor={'text-white'}
+                            />
                         </div>
                     </div>
                 </div>

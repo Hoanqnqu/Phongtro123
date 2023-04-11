@@ -44,16 +44,16 @@ const Overview = ({ payload, setPayload }) => {
                         label={'Giá cho thuê'}
                         unit={'đồng'}
                         small="Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000 "
-                        value={payload?.price}
+                        value={payload?.priceNumbe}
                         setValue={setPayload}
-                        name="price"
+                        name="priceNumber"
                     />
                     <InputFormV2
                         label={'Diện tích'}
                         unit={'m2'}
-                        value={payload?.area}
+                        value={payload?.priceNumbe}
                         setValue={setPayload}
-                        name="area"
+                        name="areaNumber"
                     />
                     <Select
                         label={'Đối tượng cho thuê'}

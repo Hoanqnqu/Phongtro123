@@ -1,25 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Contact, Intro } from '~/components';
 import { Header, Search } from '~/contains/Public';
 import Navigation from './Navigation';
 
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '~/store/actions';
-
+import { useSelector } from 'react-redux';
 
 function Home() {
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const { currentData } = useSelector((state) => state.user);
 
-    const dispath = useDispatch();
-    
-    useEffect(() => {
-        dispath(actions.getPrices());
-        dispath(actions.getAreas());
-        dispath(actions.getProvince());
-    }, []);
-    
     return (
         <div className="w-full flex gap-2 flex-col items-center h-full">
             <Header />
