@@ -7,8 +7,11 @@ import InputFormV2 from './InputFormV2';
 const targets = [
     { code: 'Nam', value: 'Nam' },
     { code: 'Nữ', value: 'Nữ' },
+    { code: 'Tất cả', value: 'Tất cả' },
 ];
 const Overview = ({ payload, setPayload }) => {
+    const { dataEdit } = useSelector((state) => state.post);
+
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
     return (

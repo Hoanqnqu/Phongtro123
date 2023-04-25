@@ -84,7 +84,7 @@ export const getLimitPostsAdmin = (query) => async (dispath) => {
             dispath({
                 type: actiontypes.GET_POSTS_ADMIN,
                 msg: response.data.msg,
-                post:null
+                post: null,
             });
         }
     } catch (error) {
@@ -94,3 +94,12 @@ export const getLimitPostsAdmin = (query) => async (dispath) => {
         });
     }
 };
+
+export const editData = (dataEdit) => ({
+    type: actiontypes.EDIT_DATA,
+    dataEdit,
+});
+export const restEdittData = () => ({
+    type: actiontypes.RESET_DATAEDIT
+ 
+});

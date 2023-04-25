@@ -2,13 +2,35 @@ import React, { useEffect, useState, memo } from 'react';
 import Select from './Select';
 import { apiGetPublicDistricts, apiGetPublicProvinces } from '~/services';
 import InputReadOnly from './InputReadOnly';
+import { useSelector } from 'react-redux';
+import { editData } from '~/store/actions';
 const Address = ({ payload, setPayload, isReset }) => {
+    const { dataEdit } = useSelector((state) => state.post);
     const [provinces, setProvinces] = useState([]);
     const [province, setProvince] = useState('');
     const [district, setDistrict] = useState('');
     const [districts, setDistricts] = useState([]);
     const [reset, setReset] = useState(false);
 
+    useEffect(() => {
+        if (dataEdit) {
+            let addressArr = dataEdit?.address?.split(',');
+            let foundProvince =
+                provinces.length > 0 &&
+                provinces?.find((item) => item.province_name === addressArr[addressArr.length - 1]?.trim());
+            setProvince(foundProvince ? foundProvince.province_id : '');
+        }
+    }, [provinces, dataEdit]);
+    useEffect(() => {
+        if (dataEdit) {
+            let addressArr = dataEdit?.address?.split(',');
+            let foundDistrict =
+                districts.length > 0 &&
+                districts?.find((item) => item.district_name === addressArr[addressArr.length - 2]?.trim());
+            setDistrict(foundDistrict ? foundDistrict.district_id : '');
+        }
+    }, [districts, dataEdit]);
+    
     useEffect(() => {
         const fetchPublicProvince = async () => {
             const response = await apiGetPublicProvinces();
