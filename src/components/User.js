@@ -8,7 +8,7 @@ const User = () => {
     return (
         <div className="flex items-center gap-2">
             <img
-                src={blobToBase64(currentData?.avatar) || avatar}
+                src={currentData?.avatar ? blobToBase64(currentData?.avatar) : avatar}
                 alt="avatar"
                 className="w-10 object-cover rounded-full h-10 border-2 border-white shadow-md "
             />

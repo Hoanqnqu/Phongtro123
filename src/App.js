@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { path } from '~/ultils/containt';
-import { DetailPost, Home, Homepage, Login, Rental, SearchDetail } from './contains/Public';
+import { Contact, DetailPost, Home, Homepage, Login, Rental, SearchDetail } from './contains/Public';
 import { CreatePost, EditAccount, ManagePost, System } from './contains/System';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -32,7 +32,7 @@ function App() {
                     <Route path={path.CHO_THUE_PHONG_TRO} element={<Rental categoryCode={'CTPT'} />} />
                     <Route path={path.NHA_CHO_THUE} element={<Rental categoryCode={'NCT'} />} />
                     <Route path={path.SEARCH} element={<SearchDetail />} />
-
+                    <Route path={path.CONTACT} element={<Contact />} />
                     <Route path={path.DETAIL_POST_TITLE_POSTID} element={<DetailPost />} />
                 </Route>
                 <Route path={path.SYSTEM} element={<System />}>

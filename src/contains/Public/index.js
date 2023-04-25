@@ -7,4 +7,4 @@ export { default as Rental } from '~/contains/Public/Rental';
 export { default as Search } from '~/contains/Public/Search';
 export { default as DetailPost } from '~/contains/Public/DetailPost';
 export { default as SearchDetail } from '~/contains/Public/SearchDetail';
-
+export { default as Contact } from '~/contains/Public/Contact';

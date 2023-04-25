@@ -10,13 +10,13 @@ function InputForm({ label, value, setValue, name, invalidFields, setInvalidFiel
                 type={type}
                 id="phone"
                 value={value}
-                onFocus={() => setInvalidField([])}
+                onFocus={() => setInvalidField && setInvalidField([])}
                 onChange={(e) => {
                     setValue((prev) => ({ ...prev, [name]: e.target.value }));
                 }}
                 className="outline-none bg-[#e8f0fe] p-2 rounded-md w-full"
             />
-            {invalidFields.length > 0 && invalidFields.some((i) => i.name === name,) && (
+            {invalidFields?.some((i) => i.name === name) && (
                 <small className="text-red-500 italic">{invalidFields.find((i) => i.name === name)?.message}</small>
             )}
         </div>
