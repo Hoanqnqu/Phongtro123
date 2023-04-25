@@ -68,3 +68,28 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+###Trang web có đầy đủ các chức năng:
+-SignIn, SignUp
+-Phân trang,
+-Search,
+-Các bài đăng mới nhất
+-Thông tin chi tiết bài dăng
+-Đăng tin
+-Quản lí tin đăng,
+-Chỉnh sửa thông tin cá nhân
+-Logout
+### Giao diện:
+Giao diện trang chủ:
+![image](https://user-images.githubusercontent.com/94093871/234211759-963ed32d-c91d-449e-b643-dff3b840b612.png)
+Giao diện trang login
+![image](https://user-images.githubusercontent.com/94093871/234211943-c0665bfc-b748-4282-b343-f97cb63dcf08.png)
+Giao diện trang signup
+![image](https://user-images.githubusercontent.com/94093871/234212047-36790b8b-b4fd-4f33-b3c2-bf648c36e73b.png)
+Giao diện sau khi đăng nhập
+![image](https://user-images.githubusercontent.com/94093871/234212304-8eac18f7-bdc7-4b15-b86e-a7bbb0b8cd3b.png)
+Giao diện trang cá nhân: mục đăng bài
+![image](https://user-images.githubusercontent.com/94093871/234212545-4df75511-53d9-43b4-85ad-ad30c248d366.png)
+Giao điện trang cá nhân: mục quản lí bài đăng
+![image](https://user-images.githubusercontent.com/94093871/234212739-d0800b4e-5bb7-4548-ac75-506c5b4ac7c8.png)
+
