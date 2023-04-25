@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react';
 import icons from '~/assets/icons';
 import { Link } from 'react-router-dom';
 import { formatVietnameseToString } from '~/ultils/common';
-
+import { path } from '~/ultils/containt';
 const indexs = [0, 1, 2, 3];
 
 const { GrStar, RiHeartFill, RiHeartLine, BsBookmarkFill } = icons;
@@ -18,7 +18,7 @@ function Item({ images, address, attributes, description, star, title, user, id 
     return (
         <div className="w-full flex border-t border-orange-600 p-4 bg-[#fff9f3] ">
             <Link
-                to={`chi-tiet/${formatVietnameseToString(title)}/${id}`}
+                to={`${path.DETAIL}${formatVietnameseToString(title)}/${id}`}
                 className="w-2/5 flex flex-wrap gap-[2px] items-center relative cursor-pointer"
             >
                 {images.length > 0 &&
@@ -41,14 +41,17 @@ function Item({ images, address, attributes, description, star, title, user, id 
             </Link>
             <div className="w-3/5">
                 <div className="flex justify-between gap-4 w-full ">
-                    <div className="text-red-600 font-medium">
+                    <Link
+                        to={`${path.DETAIL}${formatVietnameseToString(title)}/${id}`}
+                        className="text-red-600 font-medium"
+                    >
                         {+star > 0 &&
                             stars.map((item, index) => {
                                 return <GrStar key={index} className="star-item" size={18} color="yellow" />;
                             })}
 
                         {title}
-                    </div>
+                    </Link>
                     <div className="w-[10%] flex justify-end">
                         <BsBookmarkFill size={24} color="orange" />
                     </div>
