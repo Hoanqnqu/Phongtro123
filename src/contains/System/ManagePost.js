@@ -6,16 +6,20 @@ import 'flowbite';
 
 import * as actions from '~/store/actions';
 import { UpdatePost } from '~/components';
+import { apiDeletePost } from '~/services';
+import Swal from 'sweetalert2';
 const ManagePost = () => {
-    const dispath = useDispatch();
-    const { postsOfCurrent } = useSelector((state) => state.post);
     const { dataEdit } = useSelector((state) => state.post);
+    const { postsOfCurrent } = useSelector((state) => state.post);
+    const dispath = useDispatch();
+    const [updateData, setUpdateData] = useState(false);
+    const [posts, setPosts] = useState([]);
 
     const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
         dispath(actions.getLimitPostsAdmin());
-    }, []);
+    }, [updateData]);
 
     useEffect(() => {
         if (!dataEdit) {
@@ -23,7 +27,18 @@ const ManagePost = () => {
             dispath(actions.getLimitPostsAdmin());
         }
     }, [dataEdit]);
-    console.log(postsOfCurrent);
+    useEffect(() => {
+        setPosts(postsOfCurrent);
+    }, [postsOfCurrent]);
+    const handleDelete = async (postId) => {
+        const response = await apiDeletePost(postId);
+        if (response?.data.err === 0) {
+            setUpdateData((prev) => !prev);
+        } else {
+            Swal.fire('Oops!', 'delete fail', 'error');
+        }
+    };
+
     const compareDate = (expiredString) => {
         const expired = new Date(expiredString);
         const currentTime = new Date();
@@ -31,12 +46,31 @@ const ManagePost = () => {
         if (currentTime <= expired) return 'Đang hoạt động';
         else return 'Đã hết hạn';
     };
+    const handleFilterByStatus = (statusCode) => {
+        console.log(statusCode);
+        if (+statusCode === 0) {
+            const postsA = postsOfCurrent?.filter((item) => compareDate(item?.overview?.expired) === 'Đang hoạt động');
+            console.log(postsA);
+            setPosts(postsA);
+        } else if (+statusCode === 1) {
+            const postsA = postsOfCurrent?.filter((item) => compareDate(item?.overview?.expired) === 'Đã hết hạn');
+            setPosts(postsA);
+        } else {
+            console.log('sss');
+            setPosts(postsOfCurrent);
+        }
+    };
     return (
         <div>
             <div className="border-b border-solid flex items-center justify-between mb-4">
                 <h1 className="text-3xl font-medium py-4 border-gray-200">Quản lí tin đăng</h1>
-                <select className="outline-none border p-2 border-gray-200 rounded-md">
-                    <option value={''}>Lọc theo trạng thái</option>
+                <select
+                    onChange={(e) => handleFilterByStatus(e.target.value)}
+                    className="outline-none border p-2 border-gray-200 rounded-md"
+                >
+                    <option value={-1}>Lọc theo trạng thái</option>
+                    <option value={0}>Đang hoạt động</option>
+                    <option value={1}>Đã hết hạn</option>
                 </select>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -70,12 +104,12 @@ const ManagePost = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {!postsOfCurrent ? (
+                        {!posts ? (
                             <tr>
                                 <td></td>
                             </tr>
                         ) : (
-                            postsOfCurrent?.map((item) => {
+                            posts?.map((item) => {
                                 return (
                                     <tr
                                         key={item.id}
@@ -111,6 +145,7 @@ const ManagePost = () => {
                                                 Edit
                                             </button>
                                             <button
+                                                onClick={() => handleDelete(item.id)}
                                                 type="button"
                                                 className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                             >
