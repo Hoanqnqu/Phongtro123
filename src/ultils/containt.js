@@ -12,7 +12,7 @@ export const path = {
     SYSTEM: '/he-thong/*',
     CREATE_POST: 'tao-moi-tin-dang',
     MANAGE_POST: 'quan-li-bai-dang',
-
+    EDIT_ACCOUNT: 'sua-thong-tin-ca-nhan',
 };
 export const text = {
     HOME_TITLE: 'Kênh thông tin Phòng Trọ số 1 Việt Nam',
