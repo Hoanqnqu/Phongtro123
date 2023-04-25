@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import * as actions from '~/store/actions';
 import icons from '~/assets/icons';
+import { blobToBase64 } from '~/ultils/common/toBase64';
 
 const { AiOutlinePlusCircle, AiOutlineLogout, BsChevronDown } = icons;
 const active = 'hover:bg-gray-300 flex rounded-md items-center py-2 gap-2 font-bold bg-gray-200';
@@ -19,7 +20,7 @@ const SideBar = () => {
             <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                     <img
-                        src={anoAvatar}
+                        src={blobToBase64(currentData?.avatar) || anoAvatar}
                         alt="avatar"
                         className="w-12 h-12 object-cover rounded-full border-2 border-white"
                     />

@@ -12,3 +12,17 @@ export const apiGetCurrentUser = () =>
             reject(reject);
         }
     });
+
+export const apiUpdateUser = (payload) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'put',
+                url: 'api/v1/user',
+                data: payload,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(reject);
+        }
+    });
